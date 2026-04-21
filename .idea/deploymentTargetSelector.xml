@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="Day_one__-_calorie_Tracker.app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-04-20T16:48:10.661690300Z">
+        <DropdownSelection timestamp="2026-04-21T12:35:43.798916800Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\aa\.android\avd\Pixel_XL_2.avd" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=23f93164091c7ece" />
             </handle>
           </Target>
         </DropdownSelection>
