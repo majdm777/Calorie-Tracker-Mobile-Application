@@ -1,40 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:padding="10dp"
-    android:orientation="vertical">
+
+
+    >
+
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
+
+        android:id="@+id/personal_Info"
+        android:layout_width="384dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/black"
+        android:orientation="horizontal"
+        android:padding="10dp"
+
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:layout_constraintVertical_bias="0.0"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:text="Weight :75kg"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:text="Age :75kg"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:text="height :175cm"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:id="@+id/progress_Box"
+        android:layout_width="385dp"
+        android:layout_height="184dp"
+        android:layout_margin="10dp"
+        android:background="@color/black"
         android:orientation="vertical"
         android:padding="10dp"
-        >
+
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.615"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:layout_constraintVertical_bias="0.199">
+
         <TextView
-            android:id="@+id/calorieText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="10dp"
-            android:text="100 / 2000 kcal" />
+            android:text="100/2000 kcal" />
 
         <ProgressBar
-            android:id="@+id/SHOW_PROGRESS"
+            android:id="@+id/progress_Bar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:max="2000"
-            android:progress="1000"
+            android:progress="100"
+
+            android:progressBackgroundTint="@color/black"
+            android:progressTint="@color/white"
 
             />
 
+        <TextView
+            android:id="@+id/progress_Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="1900 kcal remaining" />
 
 
     </LinearLayout>
 
-</LinearLayout>
+    <LinearLayout
+
+        android:id="@+id/daily_Info"
+        android:layout_width="386dp"
+        android:layout_height="232dp"
+        android:layout_margin="10dp"
+        android:background="@color/black"
+        android:orientation="vertical"
+        android:padding="10dp"
+
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.729">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="Daily Info"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="Protien : 20g"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="Sugar : 20g"
+            android:textSize="16dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="Carbs : 20g"
+            android:textSize="16dp" />
+
+
+    </LinearLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/navigation_menu"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

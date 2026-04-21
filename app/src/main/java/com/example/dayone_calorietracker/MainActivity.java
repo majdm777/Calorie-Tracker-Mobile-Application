@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        progressBar = findViewById(R.id.SHOW_PROGRESS);
+        progressBar = findViewById(R.id.progress_Bar);
         progressBar.setMax(2000);
         progressBar.setProgress(1000);
 
