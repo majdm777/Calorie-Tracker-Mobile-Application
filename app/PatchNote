@@ -1,2 +1,9 @@
-v1.0.0 :
-        ...
+v0.0.1 :
+        _ build main page set the daily target, today's meal , personal details and todays nutrition.
+        _ added the navigation bar and add meal button
+        _ added drawer
+
+v0.0.2 :
+        _ added the structure of the data base(database,Daos,Entities) with a simple queries
+        _ created the user info page
+        _ if it is first time opening the app it will redirect to user info to fill the required info

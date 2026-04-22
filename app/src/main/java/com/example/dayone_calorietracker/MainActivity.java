@@ -1,6 +1,9 @@
 package com.example.dayone_calorietracker;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.StaticLayout;
 import android.view.Menu;
 import android.widget.ProgressBar;
 
@@ -12,14 +15,37 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.room.Room;
+
+import com.example.dayone_calorietracker.DataBase.AppDataBase;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    public Date date;
     ProgressBar progressBar;
+
+    public static AppDataBase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
+        if(isFirstTime()){
+            Intent i = new Intent(this,UserInfo.class);
+            startActivity(i);
+        }
+
+        date = new Date();
+
+        //database connection
+        db= Room.databaseBuilder(getApplicationContext(),AppDataBase.class,"AppDataBase").build();
+
 
         Toolbar HomeToolBar = (Toolbar) findViewById(R.id.home_Toolbar);
         setSupportActionBar(HomeToolBar);
@@ -49,5 +75,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_app_bar, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+
+    public boolean isFirstTime(){
+        SharedPreferences sp = getSharedPreferences("UserInfo",MODE_PRIVATE);
+        return !sp.contains("User_Target");
     }
 }
