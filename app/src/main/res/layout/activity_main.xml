@@ -54,6 +54,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/User_Weight"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -63,6 +64,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/User_Age"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -72,6 +74,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/User_Height"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -176,6 +179,7 @@
                 android:gravity="center" />
 
             <TextView
+                android:id="@+id/Protein"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="Protein: 20 g"
@@ -183,6 +187,7 @@
                 android:layout_marginTop="4dp" />
 
             <TextView
+                android:id="@+id/Sugar"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="Sugar: 25 g"
@@ -190,6 +195,7 @@
                 android:layout_marginTop="2dp" />
 
             <TextView
+                android:id="@+id/Carbs"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="Carbs: 180 g"
@@ -197,6 +203,7 @@
                 android:layout_marginTop="2dp" />
 
             <TextView
+                android:id="@+id/Fats"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:text="Fat: 40 g"

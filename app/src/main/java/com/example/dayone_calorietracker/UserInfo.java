@@ -64,7 +64,7 @@ public class UserInfo extends AppCompatActivity {
 
     public boolean isFirstTime(){
 
-        return !sp.contains("TargetCalorie");
+        return !sp.contains("User_Target");
     }
 
     public void LoadInfo(){
@@ -76,10 +76,10 @@ public class UserInfo extends AppCompatActivity {
 
         String targetCalorie = sp.getString("User_Target","2000");
 
-        Weight.setHint(weight);
-        Height.setHint(height);
-        Age.setHint(age);
-        TargetCalorie.setHint(targetCalorie);
+        Weight.setText(weight);
+        Height.setText(height);
+        Age.setText(age);
+        TargetCalorie.setText(targetCalorie);
     }
 
     public boolean saveInfo(){
@@ -89,18 +89,28 @@ public class UserInfo extends AppCompatActivity {
             String age = Age.getText().toString();
             String target = TargetCalorie.getText().toString();
 
+            if(weight.isEmpty() || height.isEmpty() || age.isEmpty() || target.isEmpty()){
+                Toast.makeText(this,"Fill All Fields",Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
             SharedPreferences.Editor editor = sp.edit();
             editor.putString("User_Weight", weight);
             editor.putString("User_Height", height);
             editor.putString("User_Age", age);
             editor.putString("User_Target", target);
+            editor.apply();
+
         }catch (Exception e){
             Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
             return false;
         }
 
+        Toast.makeText(this,"Info Saved",Toast.LENGTH_SHORT).show();
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
+        finish();
+
 
         return true;
     }

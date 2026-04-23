@@ -7,3 +7,8 @@ v0.0.2 :
         _ added the structure of the data base(database,Daos,Entities) with a simple queries
         _ created the user info page
         _ if it is first time opening the app it will redirect to user info to fill the required info
+
+v0.0.3:
+        _ now when clicking personal info in drawer will take you to its activity page
+        _ added Welcome page for the first time entering the app
+        _ Home(main) page for now is completed and functional.

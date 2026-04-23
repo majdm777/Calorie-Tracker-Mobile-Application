@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="Day_one__-_calorie_Tracker.app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-04-21T12:35:43.798916800Z">
+        <DropdownSelection timestamp="2026-04-23T20:59:10.883854600Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="PhysicalDevice" identifier="serial=23f93164091c7ece" />

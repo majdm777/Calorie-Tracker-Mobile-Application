@@ -19,7 +19,13 @@ public interface DayDao {
     long insert(Day day);
 
     @Query("SELECT * FROM Day WHERE Id = :DayId")
-    LiveData<Day> getDayInfo(int DayId);
+    LiveData<Day> getDayInfoById(int DayId);
+
+    @Query("SELECT * FROM Day WHERE Date = :Date")
+    Day getDayInfoByDate(String Date);
+
+    @Query("SELECT COUNT(*) FROM Day WHERE Date = :date")
+    int isDayExists(String date);
 
     @Query("SELECT * FROM Day")
     LiveData<List<Day>> getAllDay();
