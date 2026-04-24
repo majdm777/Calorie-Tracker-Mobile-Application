@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, UserInfo.class));
 
             } else if (id == R.id.nav_meals) {
-//                startActivity(new Intent(this, MealsActivity.class));
+                startActivity(new Intent(this, Meals.class));
 
             } else if (id == R.id.nav_about) {
 //                startActivity(new Intent(this, AboutActivity.class));

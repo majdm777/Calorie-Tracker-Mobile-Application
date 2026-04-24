@@ -12,3 +12,10 @@ v0.0.3:
         _ now when clicking personal info in drawer will take you to its activity page
         _ added Welcome page for the first time entering the app
         _ Home(main) page for now is completed and functional.
+
+v0.0.4:
+        _ implemented Meal, MealsAdapter ane MealsViewModel
+        _ the Search Bar hopefully working
+        _ add meal fragment done and all working but still some work need to be done
+        _view Meals need to be redesigned but at least its working
+

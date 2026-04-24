@@ -17,7 +17,7 @@ public interface MealDao {
     long insert(Meal meal);
 
     @Query("SELECT * FROM Meal WHERE Id = :MealId")
-    LiveData<Meal> getMealInfo(int MealId);
+    LiveData<Meal> getMeal(int MealId);
 
     @Query("SELECT * FROM Meal")
     LiveData<List<Meal>> getAllMeal();
