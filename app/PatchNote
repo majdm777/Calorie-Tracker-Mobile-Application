@@ -17,5 +17,15 @@ v0.0.4:
         _ implemented Meal, MealsAdapter ane MealsViewModel
         _ the Search Bar hopefully working
         _ add meal fragment done and all working but still some work need to be done
-        _view Meals need to be redesigned but at least its working
+        _ view Meals need to be redesigned but at least it is working
 
+V0.0.5:
+        _ Implemented Days,DaysAdapter and MealsViewModel
+        _ now you can add and save meal or just add meal without meal
+        _   open the add meal from the main activity
+
+
+F.F:
+    _ template for the app
+    _ Days need a good design + new features could be added
+    _ add meal fragment need to be fixed

@@ -1,4 +1,4 @@
-package com.example.dayone_calorietracker;
+package com.example.dayone_calorietracker.Models;
 
 import android.app.Application;
 
@@ -8,23 +8,23 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 
 import com.example.dayone_calorietracker.DataBase.AppDataBase;
-import com.example.dayone_calorietracker.DataBase.Enitities.Meal;
+import com.example.dayone_calorietracker.DataBase.Enitities.Day;
 
 import java.util.List;
 
-public class MealsViewModel extends AndroidViewModel {
+public class DaysViewModel extends AndroidViewModel {
 
-    private LiveData<List<Meal>> meals;
+    private LiveData<List<Day>> days;
 
-    public MealsViewModel(@NonNull Application application) {
+    public DaysViewModel(@NonNull Application application){
         super(application);
 
-
         AppDataBase db = Room.databaseBuilder(application.getApplicationContext(),AppDataBase.class,"AppDataBase").build();
-        meals = db.mealdao().getAllMeal();
+
+        days=db.daydao().getAllDay();
     }
 
-    public LiveData<List<Meal>> getMeals() {
-        return meals;
+    public LiveData<List<Day>> getDays(){
+        return days;
     }
 }

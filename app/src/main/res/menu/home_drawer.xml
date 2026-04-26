@@ -12,6 +12,11 @@
             android:id="@+id/nav_meals"
             android:title="View Meals"
             android:icon="@android:drawable/ic_menu_agenda"/>
+
+        <item
+            android:id="@+id/nav_days"
+            android:title="View Days"
+            android:icon="@android:drawable/ic_menu_agenda"/>
     </group>
 
     <group android:id="@+id/group3">

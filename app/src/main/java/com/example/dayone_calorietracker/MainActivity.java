@@ -2,15 +2,20 @@ package com.example.dayone_calorietracker;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.StaticLayout;
 import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton$InspectionCompanion;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -20,11 +25,14 @@ import androidx.room.Room;
 
 import com.example.dayone_calorietracker.DataBase.AppDataBase;
 import com.example.dayone_calorietracker.DataBase.Enitities.Day;
+import com.example.dayone_calorietracker.Fragments.AddMealFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,7 +40,9 @@ import java.util.concurrent.Executors;
 public class MainActivity extends AppCompatActivity {
 
 
-    public Date date;
+
+    SimpleDateFormat sdf;
+    String dateString;
 
     Day today;
     ProgressBar progressBar;
@@ -45,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
     TextView Carbs;
     TextView Sugar;
     TextView Fats;
+    FloatingActionButton btnAddMeal;
+
+    View CalorieLayout;
 
 
     SharedPreferences sp;
@@ -75,6 +88,20 @@ public class MainActivity extends AppCompatActivity {
         Carbs = findViewById(R.id.Carbs);
         Sugar = findViewById(R.id.Sugar);
         Fats =findViewById(R.id.Fats);
+        CalorieLayout = findViewById(R.id.Calorie_layout);
+        CalorieLayout.setOnClickListener(v->{
+            Toast.makeText(this,Remaining_Calories.getText(),Toast.LENGTH_SHORT).show();
+        });
+
+        btnAddMeal =findViewById(R.id.add_meal_button);
+        btnAddMeal.setOnClickListener(v -> {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, new AddMealFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
+
 
 
         sp = getSharedPreferences("UserInfo",MODE_PRIVATE);
@@ -84,7 +111,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
         }
 
-        date = new Date();
+        sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        dateString = sdf.format(new Date());
 //        today = getDay(date.toString());
 //
 //
@@ -92,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 //        loadUserInfo();
 
 //        load data from database
-        fetchAndLoadData(date.toString());
+        fetchAndLoadData(dateString);
 
 
 
@@ -120,6 +148,8 @@ public class MainActivity extends AppCompatActivity {
 
             } else if (id == R.id.nav_about) {
 //                startActivity(new Intent(this, AboutActivity.class));
+            } else if (id ==R.id.nav_days) {
+                startActivity(new Intent(this, Days.class));
             }
 
             drawer.closeDrawers();
@@ -128,6 +158,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchAndLoadData(sdf.format(new Date()));
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_app_bar, menu);
@@ -143,8 +181,6 @@ public class MainActivity extends AppCompatActivity {
     public void loadUserInfo(){
 
         String weight="Weight: "+sp.getString("User_Weight","0")+"Kg";
-
-
         UWeight.setText(weight);
 
         String Height = "Height: "+sp.getString("User_Height","0")+"cm";
@@ -153,13 +189,14 @@ public class MainActivity extends AppCompatActivity {
         String Age = "Age: "+sp.getString("User_Age","0");
         UAge.setText(Age);
 
-        String Calorie_Status = "0/"+sp.getString("User_Target","Null")+" Kcal";
+        String Calorie_Status = today.calorie+"/"+sp.getString("User_Target","Null")+" Kcal";
         UTarget.setText(Calorie_Status);
 
         progressBar.setMax(Integer.parseInt(sp.getString("User_Target","2000")));
         progressBar.setProgress(today.calorie);
 
         int remaining = today.Target - today.calorie;
+        if(remaining<0) remaining=0;
         String remaining_calories = remaining+" kcal remaining";
         Remaining_Calories.setText(remaining_calories);
 

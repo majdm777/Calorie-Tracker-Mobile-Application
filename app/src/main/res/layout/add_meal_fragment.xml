@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp">
+    android:padding="20dp"
+    android:background="@color/white">
 
     <LinearLayout
         android:orientation="vertical"
@@ -48,14 +48,14 @@
                 android:gravity="center"
                 android:checked="true"
                 android:layout_height="wrap_content"
-                android:onClick="setType(this)"
+
                 android:text="MEAL"/>
 
             <RadioButton
                 android:id="@+id/isDrink"
                 android:layout_width="100dp"
                 android:gravity="center"
-                android:onClick="setType(this)"
+
                 android:layout_height="wrap_content"
                 android:text="Drink"/>
 
@@ -68,6 +68,7 @@
             android:layout_margin="5dp"/>
 
         <TextView
+            android:id="@+id/tv_Calorie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Calorie /100g"
@@ -81,6 +82,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/input_calories"
             android:text="1"
+
             android:inputType="number"/>
 
 
@@ -102,12 +104,14 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
             <TextView
+                android:id="@+id/tv_Protein"
                 android:gravity="center"
                 android:layout_width="100dp"
                 android:textSize="18sp"
                 android:layout_height="wrap_content"
                 android:text="Protein /g:"/>
             <EditText
+                android:inputType="numberDecimal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/input_protein"
@@ -122,12 +126,14 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
             <TextView
+                android:id="@+id/tv_Carbs"
                 android:gravity="center"
                 android:layout_width="100dp"
                 android:textSize="18sp"
                 android:layout_height="wrap_content"
                 android:text="Carbs /g:"/>
             <EditText
+                android:inputType="numberDecimal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/input_carbs" android:text="0"/>
@@ -141,12 +147,14 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
             <TextView
+                android:id="@+id/tv_Fat"
                 android:gravity="center"
                 android:layout_width="100dp"
                 android:textSize="18sp"
                 android:layout_height="wrap_content"
                 android:text="Fat /g:"/>
             <EditText
+                android:inputType="numberDecimal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/input_fat"
@@ -162,6 +170,7 @@
             android:orientation="horizontal"
             android:gravity="center_vertical">
             <TextView
+                android:id="@+id/tv_Sugar"
                 android:gravity="center"
                 android:layout_width="100dp"
                 android:textSize="18sp"
@@ -169,7 +178,7 @@
                 android:text="Sugar /g:"/>
             <EditText
                 android:layout_width="match_parent"
-
+                android:inputType="numberDecimal"
                 android:layout_height="wrap_content"
                 android:id="@+id/input_sugar"
                 android:text="0"/>
@@ -183,7 +192,22 @@
             android:id="@+id/btn_save"
             android:text="Save Meal"
             />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_save_add_Meal"
+            android:text="Save and Add Meal"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnadd_Meal"
+            android:text="Add Meal WithOut Saving"/>
+
     </LinearLayout>
+
+
 
 </ScrollView>
 

@@ -30,6 +30,9 @@ public interface DayDao {
     @Query("SELECT * FROM Day")
     LiveData<List<Day>> getAllDay();
 
+    @Query("UPDATE Day SET calories = calories + :calorie,Protein = :protein,Carbs = :carbs,Sugar = :sugar,Fats = :fats , NumberOfMeals = NumberOfMeals + 1 WHERE Date = :DayDate")
+    void updateDay(String DayDate, int calorie, double protein, double carbs, double sugar, double fats);
+
     @Query("DELETE FROM Day WHERE Id = :DayId")
     void deleteById(int DayId);
 
