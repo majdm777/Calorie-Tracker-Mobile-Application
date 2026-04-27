@@ -43,6 +43,7 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
         holder.Date.setText(day.date);
         holder.State.setText(day.State);
         holder.Calories_Target.setText(_Calories+"/"+_Target+" kcal");
+        holder.NumberOfMeals.setText("Number Of Meals: "+day.NumberOfMeals);
 
     }
 
@@ -52,12 +53,12 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView State,Date,Calories_Target;;
+        TextView State,Date,Calories_Target,NumberOfMeals;;
 
         public ViewHolder(@NonNull View view) {
             super(view);
 
-
+            NumberOfMeals=view.findViewById(R.id.Number_Of_Meals);
             State = view.findViewById(R.id.State);
             Date = view.findViewById(R.id.Date);
             Calories_Target = view.findViewById(R.id.Calories_Target);

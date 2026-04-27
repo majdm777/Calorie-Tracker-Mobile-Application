@@ -53,54 +53,12 @@
             android:layout_marginTop="4dp"/>
 
         <!-- Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="10dp"
-            android:background="#E0E0E0"/>
+
 
         <!-- Macros -->
-        <LinearLayout
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="start">
 
-            <TextView
-                android:id="@+id/meal_protein"
-                android:layout_width="100dp"
-                android:gravity="start"
-                android:layout_height="wrap_content"
-                android:text="Protein: 20g"/>
-            <TextView
-                android:id="@+id/meal_carbs"
-                android:layout_width="100dp"
-                android:gravity="start"
-                android:layout_height="wrap_content"
-                android:text="Carbs: 50g"/>
-        </LinearLayout>
 
-        <LinearLayout
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="start">
-            <TextView
-                android:id="@+id/meal_fat"
-                android:layout_width="100dp"
-                android:gravity="start"
-                android:layout_height="wrap_content"
-                android:text="Fat: 10g"/>
-
-            <TextView
-                android:id="@+id/meal_sugar"
-                android:layout_width="100dp"
-                android:gravity="start"
-                android:layout_height="wrap_content"
-                android:text="Sugar: 10g"/>
-        </LinearLayout>
 
 
         <!-- Buttons -->
@@ -111,19 +69,7 @@
             android:gravity="end"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/meal_edit"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:backgroundTint="#9E9E9E"
-                android:padding="0sp"
-                android:text="Edite"
 
-                android:textSize="10sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/meal_add"
-                app:layout_constraintStart_toEndOf="@+id/meal_delete"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/meal_delete"
@@ -138,18 +84,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
 
-                android:id="@+id/meal_add"
-                android:layout_width="50dp"
-                android:layout_height="30dp"
-                android:backgroundTint="#4CAF50"
-                android:padding="0dp"
-
-                android:text="Add"
-                android:textSize="10sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

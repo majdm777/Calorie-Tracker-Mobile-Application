@@ -3,6 +3,7 @@ package com.example.dayone_calorietracker.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,10 +39,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
         holder.Name.setText(meal.Name);
         holder.Calorie.setText(meal.Calorie + " kcal");
         holder.Type.setText(meal.Type);
-        holder.Protein.setText(meal.Protein+" g");
-        holder.Carbs.setText(meal.Carbs+" g");
-        holder.Fats.setText(meal.Fats+" g");
-        holder.Sugar.setText(meal.Sugar+" g");
+
     }
 
     @Override
@@ -50,8 +48,8 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView Name, Calorie, Type, Protein, Carbs, Fats, Sugar;
-
+        TextView Name, Calorie, Type;
+        Button  btnDelete;
         public ViewHolder(@NonNull View view,
                           List<Meal> meals,
                           OnItemClickListener listener) {
@@ -68,10 +66,10 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
             Name = view.findViewById(R.id.meal_name);
             Calorie = view.findViewById(R.id.meal_calories);
             Type = view.findViewById(R.id.meal_type);
-            Protein = view.findViewById(R.id.meal_protein);
-            Carbs = view.findViewById(R.id.meal_carbs);
-            Fats = view.findViewById(R.id.meal_fat);
-            Sugar = view.findViewById(R.id.meal_sugar);
+            btnDelete = view.findViewById(R.id.meal_delete);
+
+
+
         }
     }
 
@@ -86,6 +84,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
 
     public interface OnItemClickListener {
         void onItemClick(Meal meal);
+
     }
 }
 

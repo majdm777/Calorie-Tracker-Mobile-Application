@@ -68,7 +68,7 @@ public class chooseWeightMeal extends Fragment {
         }
         double _Amount = Double.parseDouble(Amount.getText().toString());
 
-        double _Calorie= (meal.Calorie/100)*_Amount;
+        double _Calorie= meal.Calorie*_Amount;
 
         new Thread(() -> {
             db.daydao().updateDay(dateString, (int) _Calorie,meal.Protein,meal.Carbs,meal.Sugar,meal.Fats);

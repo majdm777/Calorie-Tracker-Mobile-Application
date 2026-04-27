@@ -113,11 +113,6 @@ public class MainActivity extends AppCompatActivity {
 
         sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         dateString = sdf.format(new Date());
-//        today = getDay(date.toString());
-//
-//
-//        // fill the user Info/data
-//        loadUserInfo();
 
 //        load data from database
         fetchAndLoadData(dateString);
@@ -215,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (_today == null) {
                 _today = new Day();
+                _today.State ="NotReached";
                 _today.date = dateString;
                 _today.Target = Integer.parseInt(sp.getString("User_Target", "2000"));
                 db.daydao().insert(_today);
