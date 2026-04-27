@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // connecting database
-        db = Room.databaseBuilder(getApplicationContext(),AppDataBase.class,"AppDataBase").build();
+        db =AppDataBase.getInstance(this);
 
         UWeight = findViewById(R.id.User_Weight);
         UHeight = findViewById(R.id.User_Height);

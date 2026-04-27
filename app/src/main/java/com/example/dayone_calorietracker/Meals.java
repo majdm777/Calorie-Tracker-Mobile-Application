@@ -3,13 +3,16 @@ package com.example.dayone_calorietracker;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import com.example.dayone_calorietracker.Adapters.MealsAdapter;
+import com.example.dayone_calorietracker.DataBase.AppDataBase;
 import com.example.dayone_calorietracker.DataBase.Enitities.Meal;
 import com.example.dayone_calorietracker.Fragments.AddMealFragment;
 import com.example.dayone_calorietracker.Fragments.chooseWeightMeal;
@@ -26,6 +29,8 @@ public class Meals extends AppCompatActivity {
     SearchView searchView;
     Button btnAddMeal;
 
+    AppDataBase db;
+
     List<Meal> fullList = new ArrayList<>();
 
     @Override
@@ -37,6 +42,10 @@ public class Meals extends AppCompatActivity {
         recyclerView = findViewById(R.id.recMeal);
         searchView = findViewById(R.id.searchView);
         btnAddMeal = findViewById(R.id.btnAddMeal);
+
+        //database
+        db= Room.databaseBuilder(getApplicationContext(),AppDataBase.class,"AppDataBase").build();
+
 
         // Recycler setup
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -75,6 +84,17 @@ public class Meals extends AppCompatActivity {
                     .commit();
         });
 
+
+        adapter.setOnButtonDeleteListener(meal -> {
+            new Thread(() -> {
+                db.mealdao().deleteById(meal.Id);
+
+                runOnUiThread(() -> {
+                    Toast.makeText(this, meal.Name+" Deleted", Toast.LENGTH_SHORT).show();
+                });
+
+            }).start();
+        });
 
         adapter.setOnItemClickListener(meal -> {
 

@@ -13,7 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
 import com.example.dayone_calorietracker.DataBase.AppDataBase;
+import com.example.dayone_calorietracker.DataBase.Enitities.Day;
 import com.example.dayone_calorietracker.DataBase.Enitities.Meal;
+import com.example.dayone_calorietracker.DataBase.Enitities.MealsPerDay;
 import com.example.dayone_calorietracker.R;
 
 import java.util.Date;
@@ -62,16 +64,53 @@ public class chooseWeightMeal extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String dateString = sdf.format(new Date());
 
-        if(Amount.getText() == null){
+        if(Amount.getText().toString().trim().isEmpty()){
             Toast.makeText(getContext(), "enter amount", Toast.LENGTH_SHORT).show();
             return;
         }
-        double _Amount = Double.parseDouble(Amount.getText().toString());
+        double _Amount;
+
+        try {
+            _Amount = Double.parseDouble(Amount.getText().toString());
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Invalid amount", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         double _Calorie= meal.Calorie*_Amount;
+        double _Protein = meal.Protein*_Amount;
+        double _Carbs = meal.Carbs*_Amount;
+        double _Fats = meal.Fats*_Amount;
+        double _Sugar = meal.Sugar*_Amount;
+
+
 
         new Thread(() -> {
-            db.daydao().updateDay(dateString, (int) _Calorie,meal.Protein,meal.Carbs,meal.Sugar,meal.Fats);
+            db.daydao().updateDay(dateString, (int) _Calorie,_Protein,_Carbs,_Sugar,_Fats);;
+
+            Day day = db.daydao().getDayInfoByDate(dateString);
+
+            if (day == null) {
+                day = new Day();
+                day.date = dateString;
+                db.daydao().insert(day);
+            }
+
+            int DayId = day.Id;
+
+            MealsPerDay MPD = new MealsPerDay();
+            MPD.DayId = DayId;
+            MPD.Name = meal.Name;
+            MPD.Calorie = _Calorie;
+            MPD.Type = meal.Type;
+            MPD.Fats=_Fats;
+            MPD.Carbs=_Carbs;
+            MPD.Sugar=_Sugar;
+            MPD.Protein=_Protein;
+            MPD.Amount=(int)_Amount;
+
+            db.mealsperdaydao().insert(MPD);
+
 
             requireActivity().runOnUiThread(() -> {
                 Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();

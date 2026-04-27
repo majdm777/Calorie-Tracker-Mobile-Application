@@ -24,6 +24,10 @@ public interface DayDao {
     @Query("SELECT * FROM Day WHERE Date = :Date")
     Day getDayInfoByDate(String Date);
 
+    @Query("SELECT Id FROM Day WHERE Date = :Date")
+    int getDayIdByDate(String Date);
+
+
     @Query("SELECT COUNT(*) FROM Day WHERE Date = :date")
     int isDayExists(String date);
 

@@ -41,7 +41,14 @@ public class MealsPerDay {
     @ColumnInfo(name = "Protein",defaultValue = "0")
     public double Protein;
 
-    @ColumnInfo(name = "fats",defaultValue = "0")
+    @ColumnInfo(name = "Fats",defaultValue = "0")
     public double Fats;
+
+    @ColumnInfo(name = "Amount",defaultValue = "1")
+    public int Amount;
+
+    @ColumnInfo(name = "Note",defaultValue = ".")
+    public String Note;
+
 
 }

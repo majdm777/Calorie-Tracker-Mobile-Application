@@ -24,6 +24,13 @@ V0.0.5:
         _ now you can add and save meal or just add meal without meal
         _   open the add meal from the main activity
 
+V0.0.5.1:
+         _ just fixed the design in both meal and day
+
+V0.0.6:
+        _ now MealsPerDays is triggered every add
+
+
 
 F.F:
     _ template for the app

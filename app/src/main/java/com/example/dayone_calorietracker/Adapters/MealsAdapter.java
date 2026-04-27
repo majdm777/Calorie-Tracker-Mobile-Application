@@ -18,7 +18,11 @@ import java.util.List;
 public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> {
 
     List<Meal> meals;
-    private OnItemClickListener listener;
+    private OnItemClickListener Itemlistener;
+
+    private OnButtonDeleteListener ButtonDeleteListener;
+
+
 
     public MealsAdapter(List<Meal> meals) {
         this.meals = meals;
@@ -29,7 +33,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.meal_layout, parent, false);
-        return new ViewHolder(view, meals, listener);
+        return new ViewHolder(view, meals, Itemlistener,ButtonDeleteListener);
     }
 
     @Override
@@ -52,8 +56,14 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
         Button  btnDelete;
         public ViewHolder(@NonNull View view,
                           List<Meal> meals,
-                          OnItemClickListener listener) {
+                          OnItemClickListener listener,
+                          OnButtonDeleteListener OnButtonDeleteListener) {
             super(view);
+
+            Name = view.findViewById(R.id.meal_name);
+            Calorie = view.findViewById(R.id.meal_calories);
+            Type = view.findViewById(R.id.meal_type);
+            btnDelete = view.findViewById(R.id.meal_delete);
 
             itemView.setOnClickListener(v -> {
                 int position =getAdapterPosition();
@@ -62,11 +72,14 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
                 }
             });
 
+            btnDelete.setOnClickListener(v -> {
+                if (OnButtonDeleteListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                    OnButtonDeleteListener.onButtonDeleteClick(meals.get(getAdapterPosition()));
+                }
+            });
 
-            Name = view.findViewById(R.id.meal_name);
-            Calorie = view.findViewById(R.id.meal_calories);
-            Type = view.findViewById(R.id.meal_type);
-            btnDelete = view.findViewById(R.id.meal_delete);
+
+
 
 
 
@@ -79,12 +92,19 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
-        this.listener = listener;
+        this.Itemlistener=listener;
+    }
+    public void setOnButtonDeleteListener(OnButtonDeleteListener listener){
+        this.ButtonDeleteListener=listener;
     }
 
     public interface OnItemClickListener {
         void onItemClick(Meal meal);
 
+    }
+
+    public interface OnButtonDeleteListener{
+        void onButtonDeleteClick(Meal meal);
     }
 }
 
