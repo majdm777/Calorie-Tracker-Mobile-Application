@@ -72,6 +72,8 @@ public class AddMealFragment extends Fragment {
         btnSaveAddMeal.setOnClickListener(v -> SaveAddMeal());
 
 
+
+
         adjustTextView();
         return view;
     }

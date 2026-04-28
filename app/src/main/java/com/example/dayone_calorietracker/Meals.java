@@ -1,11 +1,16 @@
 package com.example.dayone_calorietracker;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +22,7 @@ import com.example.dayone_calorietracker.DataBase.Enitities.Meal;
 import com.example.dayone_calorietracker.Fragments.AddMealFragment;
 import com.example.dayone_calorietracker.Fragments.chooseWeightMeal;
 import com.example.dayone_calorietracker.Models.MealsViewModel;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +65,38 @@ public class Meals extends AppCompatActivity {
         viewModel.getMeals().observe(this, meals -> {
             fullList = meals;
             adapter.setMeals(meals);
+        });
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
+        DrawerLayout drawer = findViewById(R.id.Main_Drawer);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, myToolbar, R.string.open, R.string.close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.drawer);
+        navigationView.setNavigationItemSelectedListener(item -> {
+
+            int id = item.getItemId();
+
+            if (id == R.id.nav_personal) {
+                startActivity(new Intent(this, UserInfo.class));
+
+            } else if (id == R.id.nav_meals) {
+
+                return true;
+
+            } else if (id == R.id.nav_about) {
+//                startActivity(new Intent(this, AboutActivity.class));
+            } else if (id ==R.id.nav_days) {
+                startActivity(new Intent(this, Days.class));
+            }
+
+            drawer.closeDrawers();
+
+            return true;
         });
 
         // Search functionality
@@ -120,6 +158,12 @@ public class Meals extends AppCompatActivity {
                     .commit();
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.meal_app_bar, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
 

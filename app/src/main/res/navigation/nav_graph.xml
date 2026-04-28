@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/addMealFragment">
+
+    <fragment
+        android:id="@+id/addMealFragment"
+        android:name="com.example.dayone_calorietracker.Fragments.AddMealFragment"
+        android:label="Add Meal" />
+
+    <fragment
+        android:id="@+id/chooseWeightMeal"
+        android:name="com.example.dayone_calorietracker.Fragments.chooseWeightMeal"
+        android:label="Choose Weight" />
+
+</navigation>
