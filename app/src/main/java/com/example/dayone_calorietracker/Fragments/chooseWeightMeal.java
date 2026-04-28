@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.room.Room;
 
 import com.example.dayone_calorietracker.DataBase.AppDataBase;
@@ -60,7 +61,7 @@ public class chooseWeightMeal extends Fragment {
     }
 
     public void AddMeal(){
-        AppDataBase db = Room.databaseBuilder(requireContext(), AppDataBase.class, "AppDataBase").build();
+        AppDataBase db = AppDataBase.getInstance(requireContext());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String dateString = sdf.format(new Date());
 
@@ -116,7 +117,7 @@ public class chooseWeightMeal extends Fragment {
                 Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
 
                 // close fragment
-                requireActivity().getSupportFragmentManager().popBackStack();
+                NavHostFragment.findNavController(this).popBackStack();
             });
         }).start();
     }

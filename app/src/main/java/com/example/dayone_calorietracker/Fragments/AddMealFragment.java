@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.room.Room;
 
 import com.example.dayone_calorietracker.DataBase.AppDataBase;
@@ -96,7 +97,7 @@ public class AddMealFragment extends Fragment {
 
 
 
-        AppDataBase db = Room.databaseBuilder(requireContext(), AppDataBase.class, "AppDataBase").build();
+        AppDataBase db = AppDataBase.getInstance(requireContext());
 
         new Thread(() -> {
             db.mealdao().insert(meal);
@@ -105,7 +106,7 @@ public class AddMealFragment extends Fragment {
                 Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
 
                 // close fragment
-                requireActivity().getSupportFragmentManager().popBackStack();
+                NavHostFragment.findNavController(this).popBackStack();
             });
 
         }).start();
@@ -144,7 +145,7 @@ public class AddMealFragment extends Fragment {
                 Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
 
                 // close fragment
-                requireActivity().getSupportFragmentManager().popBackStack();
+                NavHostFragment.findNavController(this).popBackStack();
             });
 
         }).start();
