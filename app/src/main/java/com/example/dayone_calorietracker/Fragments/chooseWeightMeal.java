@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.room.Room;
 
@@ -17,6 +18,8 @@ import com.example.dayone_calorietracker.DataBase.AppDataBase;
 import com.example.dayone_calorietracker.DataBase.Enitities.Day;
 import com.example.dayone_calorietracker.DataBase.Enitities.Meal;
 import com.example.dayone_calorietracker.DataBase.Enitities.MealsPerDay;
+import com.example.dayone_calorietracker.Models.DaysViewModel;
+import com.example.dayone_calorietracker.Models.MealsViewModel;
 import com.example.dayone_calorietracker.R;
 
 import java.util.Date;
@@ -28,6 +31,11 @@ public class chooseWeightMeal extends Fragment {
     Button btnAdd;
     Meal meal;
 
+    MealsViewModel mealsViewModel;
+    DaysViewModel daysViewModel;
+    MealsPerDay MPD;
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
@@ -35,6 +43,10 @@ public class chooseWeightMeal extends Fragment {
 
 
         View view = inflater.inflate(R.layout.choose_weight_fragment, container, false);
+
+        mealsViewModel = new ViewModelProvider(this).get(MealsViewModel.class);
+        daysViewModel = new ViewModelProvider(this).get(DaysViewModel.class);
+        mealsViewModel=new ViewModelProvider(this).get(MealsViewModel.class);
 
         Amount = view.findViewById(R.id.Amount);
         btnAdd = view.findViewById(R.id.btnAddMeal);
@@ -60,66 +72,26 @@ public class chooseWeightMeal extends Fragment {
         return view;
     }
 
-    public void AddMeal(){
-        AppDataBase db = AppDataBase.getInstance(requireContext());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String dateString = sdf.format(new Date());
+    public void AddMeal() {
 
-        if(Amount.getText().toString().trim().isEmpty()){
+        if (Amount.getText().toString().trim().isEmpty()) {
             Toast.makeText(getContext(), "enter amount", Toast.LENGTH_SHORT).show();
             return;
         }
-        double _Amount;
 
+        double amount;
         try {
-            _Amount = Double.parseDouble(Amount.getText().toString());
+            amount = Double.parseDouble(Amount.getText().toString());
         } catch (Exception e) {
             Toast.makeText(getContext(), "Invalid amount", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        double _Calorie= meal.Calorie*_Amount;
-        double _Protein = meal.Protein*_Amount;
-        double _Carbs = meal.Carbs*_Amount;
-        double _Fats = meal.Fats*_Amount;
-        double _Sugar = meal.Sugar*_Amount;
+        daysViewModel.addMealToDay(meal, amount);
 
+        Toast.makeText(getContext(), "Meal Added", Toast.LENGTH_SHORT).show();
 
-
-        new Thread(() -> {
-            db.daydao().updateDay(dateString, (int) _Calorie,_Protein,_Carbs,_Sugar,_Fats);;
-
-            Day day = db.daydao().getDayInfoByDate(dateString);
-
-            if (day == null) {
-                day = new Day();
-                day.date = dateString;
-                db.daydao().insert(day);
-            }
-
-            int DayId = day.Id;
-
-            MealsPerDay MPD = new MealsPerDay();
-            MPD.DayId = DayId;
-            MPD.Name = meal.Name;
-            MPD.Calorie = _Calorie;
-            MPD.Type = meal.Type;
-            MPD.Fats=_Fats;
-            MPD.Carbs=_Carbs;
-            MPD.Sugar=_Sugar;
-            MPD.Protein=_Protein;
-            MPD.Amount=(int)_Amount;
-
-            db.mealsperdaydao().insert(MPD);
-
-
-            requireActivity().runOnUiThread(() -> {
-                Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
-
-                // close fragment
-                NavHostFragment.findNavController(this).popBackStack();
-            });
-        }).start();
+        NavHostFragment.findNavController(this).popBackStack();
     }
 }
 

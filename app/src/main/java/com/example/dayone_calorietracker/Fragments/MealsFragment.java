@@ -1,11 +1,14 @@
 package com.example.dayone_calorietracker.Fragments;
 
+import static com.example.dayone_calorietracker.MainActivity.db;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -21,6 +24,8 @@ import com.example.dayone_calorietracker.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MealsFragment extends Fragment {
 
@@ -61,12 +66,9 @@ public class MealsFragment extends Fragment {
 
         // ❌ Delete button
         adapter.setOnButtonDeleteListener(meal -> {
-            new Thread(() -> {
-                AppDataBase db = AppDataBase.getInstance(requireContext());
+            viewModel.deleteMeal(meal);
+            Toast.makeText(requireContext(), "Meal deleted", Toast.LENGTH_SHORT).show();
 
-                db.mealdao().deleteById(meal.Id);
-
-            }).start();
         });
 
         // 📦 Click item → open chooseWeight
@@ -86,14 +88,6 @@ public class MealsFragment extends Fragment {
         });
 
         SearchView searchView = view.findViewById(R.id.searchView);
-
-//        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
-//            if (hasFocus) {
-//                btnAddMeal.setVisibility(View.GONE); // hide
-//            } else {
-//                btnAddMeal.setVisibility(View.VISIBLE); // show back
-//            }
-//        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -122,4 +116,6 @@ public class MealsFragment extends Fragment {
 
         adapter.setMeals(filtered);
     }
+
+
 }

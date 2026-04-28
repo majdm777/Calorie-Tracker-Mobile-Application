@@ -34,14 +34,15 @@ V0.0.6.1:
         _Added navigation drawer + App bar for Meal activity
 
 V0.0.6.2:
-        _ added nac_graph connected it to three fragments chooseweightMeal Addmeal meals fragments
-        _ meal activity moved to mealsfragment
-        _ the layout now is mealActivity(empty with nav_graph and toolbar) -> mealsFragment -> addmealFragment or chooseWeightMeal
-        _ searchbar works fine
+         _ added nac_graph connected it to three fragments chooseweightMeal Addmeal meals fragments
+         _ meal activity moved to mealsfragment
+         _ the layout now is mealActivity(empty with nav_graph and toolbar) -> mealsFragment -> addmealFragment or chooseWeightMeal
+         _ searchbar works fine
 
-
+V0.0.7.0:
+         _the recycle view update the view whenever a meal added or deleted
 
 F.F:
     _ template for the app
     _ Days need a good design + new features could be added
-    _ add meal fragment need to be fixed
+    _ the drawer in the mealsFragment need to be activated

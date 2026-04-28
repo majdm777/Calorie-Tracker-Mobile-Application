@@ -1,5 +1,7 @@
 package com.example.dayone_calorietracker.Models;
 
+import static com.example.dayone_calorietracker.MainActivity.db;
+
 import android.app.Application;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,8 @@ import com.example.dayone_calorietracker.DataBase.AppDataBase;
 import com.example.dayone_calorietracker.DataBase.Enitities.Meal;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MealsViewModel extends AndroidViewModel {
 
@@ -20,11 +24,25 @@ public class MealsViewModel extends AndroidViewModel {
         super(application);
 
 
-        AppDataBase db = Room.databaseBuilder(application.getApplicationContext(),AppDataBase.class,"AppDataBase").build();
+        AppDataBase db =AppDataBase.getInstance(application.getApplicationContext());
         meals = db.mealdao().getAllMeal();
     }
 
     public LiveData<List<Meal>> getMeals() {
         return meals;
+    }
+
+    public void deleteMeal(Meal meal) {
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            db.mealdao().deleteById(meal.Id);
+        });
+    }
+
+    public void AddMeal(Meal meal){
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            db.mealdao().insert(meal);
+        });
     }
 }

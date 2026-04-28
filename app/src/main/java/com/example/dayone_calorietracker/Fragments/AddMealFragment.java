@@ -144,7 +144,6 @@ public class AddMealFragment extends Fragment {
             requireActivity().runOnUiThread(() -> {
                 Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
 
-                // close fragment
                 NavHostFragment.findNavController(this).popBackStack();
             });
 
