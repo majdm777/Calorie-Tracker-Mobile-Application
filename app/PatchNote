@@ -39,8 +39,11 @@ V0.0.6.2:
          _ the layout now is mealActivity(empty with nav_graph and toolbar) -> mealsFragment -> addmealFragment or chooseWeightMeal
          _ searchbar works fine
 
-V0.0.7.0:
+V0.0.7:
          _the recycle view update the view whenever a meal added or deleted
+
+V0.0.7.1:
+         _ add nac_graph2 for days activity and implemented the daysfragment
 
 F.F:
     _ template for the app
