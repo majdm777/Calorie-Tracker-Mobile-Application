@@ -13,7 +13,7 @@ import com.example.dayone_calorietracker.DataBase.Enitities.Day;
 import com.example.dayone_calorietracker.DataBase.Enitities.Meal;
 import com.example.dayone_calorietracker.DataBase.Enitities.MealsPerDay;
 
-@Database(entities={Meal.class, Day.class, MealsPerDay.class},version = 2)
+@Database(entities={Meal.class, Day.class, MealsPerDay.class},version = 4)
 
 public abstract class AppDataBase extends RoomDatabase {
     private static AppDataBase instance;

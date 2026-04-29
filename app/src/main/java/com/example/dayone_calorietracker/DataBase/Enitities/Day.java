@@ -13,7 +13,7 @@ public class Day {
     public int Id;
 
     @ColumnInfo(name = "Date")
-    public String date;
+    public String Date;
 
     @ColumnInfo(name ="calories",defaultValue = "0")
     public int calorie;

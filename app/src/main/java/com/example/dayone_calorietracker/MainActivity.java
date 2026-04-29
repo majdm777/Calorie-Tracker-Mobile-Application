@@ -210,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
             if (_today == null) {
                 _today = new Day();
                 _today.State ="NotReached";
-                _today.date = dateString;
+                _today.Date = dateString;
                 _today.Target = Integer.parseInt(sp.getString("User_Target", "2000"));
                 db.daydao().insert(_today);
             }

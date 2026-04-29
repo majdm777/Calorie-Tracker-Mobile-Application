@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -67,6 +68,15 @@ public class DaysFragment extends Fragment {
             }
         });
 
+        adapter.setOnItemClickListener(Day -> {
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("ID", Day.Id);
+
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.MealsPerDayFragment, bundle);
+        });
+
         return view;
     }
 
@@ -74,7 +84,7 @@ public class DaysFragment extends Fragment {
         List<Day> filtered = new ArrayList<>();
 
         for (Day day : days) {
-            if (day.date.toLowerCase().contains(text.toLowerCase())) {
+            if (day.Date.toLowerCase().contains(text.toLowerCase())) {
                 filtered.add(day);
             }
         }

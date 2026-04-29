@@ -3,6 +3,8 @@ package com.example.dayone_calorietracker.Models;
 import static com.example.dayone_calorietracker.MainActivity.db;
 
 import android.app.Application;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -28,7 +30,7 @@ public class DaysViewModel extends AndroidViewModel {
     public DaysViewModel(@NonNull Application application){
         super(application);
 
-        AppDataBase db = Room.databaseBuilder(application.getApplicationContext(),AppDataBase.class,"AppDataBase").build();
+        AppDataBase db = AppDataBase.getInstance(application);
 
         days=db.daydao().getAllDay();
     }
@@ -55,7 +57,7 @@ public class DaysViewModel extends AndroidViewModel {
 
             if (day == null) {
                 day = new Day();
-                day.date = dateString;
+                day.Date = dateString;
                 db.daydao().insert(day);
                 day = db.daydao().getDayInfoByDate(dateString); // get ID after insert
             }
@@ -79,7 +81,9 @@ public class DaysViewModel extends AndroidViewModel {
             mpd.Protein = protein;
             mpd.Amount = (int) amount;
 
+
             db.mealsperdaydao().insert(mpd);
+
         });
     }
 }

@@ -9,4 +9,8 @@
         android:name="com.example.dayone_calorietracker.Fragments.DaysFragment"
         android:label="Days" />
 
+    <fragment
+        android:id="@+id/MealsPerDayFragment"
+        android:name="com.example.dayone_calorietracker.Fragments.MealsPerDayFragment"
+        android:label="Choose Weight" />
 </navigation>

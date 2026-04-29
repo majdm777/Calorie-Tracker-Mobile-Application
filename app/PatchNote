@@ -45,6 +45,11 @@ V0.0.7:
 V0.0.7.1:
          _ add nac_graph2 for days activity and implemented the daysfragment
 
+V0.0.7.2:
+         _ implemented MealPerDayFragment
+         _ add onitemclick on days , and it well takes you to the MealsPerDay and display all the meals related to the Day you clicked
+         _ nav_gragh2 become DaysActivity -> DaysFragment -> MealsPerDayFragment
+
 F.F:
     _ template for the app
     _ Days need a good design + new features could be added

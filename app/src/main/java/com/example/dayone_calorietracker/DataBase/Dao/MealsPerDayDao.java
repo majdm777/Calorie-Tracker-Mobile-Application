@@ -24,6 +24,10 @@ public interface MealsPerDayDao {
     @Query("SELECT * FROM MealsPerDay")
     LiveData<List<MealsPerDay>> getAllMPD();
 
+    @Query("SELECT * FROM MealsPerDay WHERE DayId = :dayId")
+    LiveData<List<MealsPerDay>> getMealsPerDay(int dayId);
+
+
     @Query("DELETE FROM MealsPerDay WHERE Id = :MPDId")
     void deleteById(int MPDId);
 

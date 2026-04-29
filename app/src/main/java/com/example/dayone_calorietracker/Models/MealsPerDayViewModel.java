@@ -25,6 +25,10 @@ public class MealsPerDayViewModel extends AndroidViewModel {
 
     }
 
+    public LiveData<List<MealsPerDay>> getMealsForDay(int dayId) {
+        return db.mealsperdaydao().getMealsPerDay(dayId);
+    }
+
     public LiveData<List<MealsPerDay>> getMealsPerDay(){return mealsPerDay;}
 
     public void addMPD(MealsPerDay MPD){

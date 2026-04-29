@@ -78,11 +78,6 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
                 }
             });
 
-
-
-
-
-
         }
     }
 

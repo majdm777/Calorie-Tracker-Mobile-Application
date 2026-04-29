@@ -14,7 +14,7 @@ import androidx.room.PrimaryKey;
                 childColumns = "DayId",
                 onDelete = ForeignKey.CASCADE
 
-        ),indices = {@Index("Id")}
+        ),indices = {@Index("DayId")}
 )
 public class MealsPerDay {
     @PrimaryKey(autoGenerate = true)
