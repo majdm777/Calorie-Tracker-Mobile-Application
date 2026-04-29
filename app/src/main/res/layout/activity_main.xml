@@ -129,6 +129,7 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="match_parent"
                 android:layout_height="12dp"
+
                 android:progress="500"
                 android:max="2000"
                 android:indeterminate="false"
@@ -251,7 +252,7 @@
                 android:layout_marginBottom="8dp"
                 android:gravity="center" />
             <Button
-                android:id="@+id/view_Todays_View"
+                android:id="@+id/view_Todays_Meal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="view"

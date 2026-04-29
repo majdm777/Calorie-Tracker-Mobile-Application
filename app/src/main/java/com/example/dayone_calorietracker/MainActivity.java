@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     View CalorieLayout;
 
-
+    Button viewTodayMeal;
     SharedPreferences sp;
 
     public static AppDataBase db;
@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         Carbs = findViewById(R.id.Carbs);
         Sugar = findViewById(R.id.Sugar);
         Fats =findViewById(R.id.Fats);
+        viewTodayMeal = findViewById(R.id.view_Todays_Meal);
         CalorieLayout = findViewById(R.id.Calorie_layout);
         CalorieLayout.setOnClickListener(v->{
             Toast.makeText(this,Remaining_Calories.getText(),Toast.LENGTH_SHORT).show();
@@ -100,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
                     .replace(R.id.fragment_container, new AddMealFragment())
                     .addToBackStack(null)
                     .commit();
+        });
+        viewTodayMeal.setOnClickListener(v -> {
+            // view today's meal code
         });
 
 

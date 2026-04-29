@@ -41,10 +41,11 @@ public class Meals extends AppCompatActivity {
 
 
         DrawerLayout drawer = findViewById(R.id.Main_Drawer);
-        NavigationView navView = findViewById(R.id.drawer);
-
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
+
+        NavigationView navView = findViewById(R.id.drawer);
+
 
         NavController navController =
                 ((androidx.navigation.fragment.NavHostFragment)
@@ -58,6 +59,8 @@ public class Meals extends AppCompatActivity {
 
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
+
     }
     @Override
     public boolean onSupportNavigateUp() {

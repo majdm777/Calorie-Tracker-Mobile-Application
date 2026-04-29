@@ -50,7 +50,10 @@ V0.0.7.2:
          _ add onitemclick on days , and it well takes you to the MealsPerDay and display all the meals related to the Day you clicked
          _ nav_gragh2 become DaysActivity -> DaysFragment -> MealsPerDayFragment
 
+
 F.F:
+    _ add nav_graph to the main page to nav between addmealfragment and view todays meals
     _ template for the app
     _ Days need a good design + new features could be added
     _ the drawer in the mealsFragment need to be activated
+    _ today's meal button should be functional
