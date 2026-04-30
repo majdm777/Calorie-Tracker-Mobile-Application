@@ -49,7 +49,7 @@ public class MealsPerDayFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         viewModel = new ViewModelProvider(this).get(MealsPerDayViewModel.class);
-        viewModel.getMealsPerDay()
+        viewModel.getMealsForDay(dayId)
             .observe(getViewLifecycleOwner(), meals -> {
                 adapter.setMealsPerDay(meals);
             });

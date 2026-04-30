@@ -26,6 +26,7 @@ import androidx.room.Room;
 import com.example.dayone_calorietracker.DataBase.AppDataBase;
 import com.example.dayone_calorietracker.DataBase.Enitities.Day;
 import com.example.dayone_calorietracker.Fragments.AddMealFragment;
+import com.example.dayone_calorietracker.Fragments.MealsPerDayFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -103,7 +104,34 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
         });
         viewTodayMeal.setOnClickListener(v -> {
-            // view today's meal code
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            String dateString = sdf.format(new Date());
+
+            new Thread(() -> {
+                Day day = db.daydao().getDayInfoByDate(dateString);
+
+                runOnUiThread(() -> {
+
+                    if (day == null) {
+                        Toast.makeText(this, "No data for today", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("ID", day.Id);
+
+                    MealsPerDayFragment fragment = new MealsPerDayFragment();
+                    fragment.setArguments(bundle);
+
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, fragment)
+                            .addToBackStack(null)
+                            .commit();
+                });
+
+            }).start();
         });
 
 
