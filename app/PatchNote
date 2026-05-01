@@ -50,6 +50,12 @@ V0.0.7.2:
          _ add onitemclick on days , and it well takes you to the MealsPerDay and display all the meals related to the Day you clicked
          _ nav_gragh2 become DaysActivity -> DaysFragment -> MealsPerDayFragment
 
+V0.0.8.1:
+         _ now you can view todays meals from the main page
+
+V0.0.9:
+         _ implemented the stats activity with all its features (BarCharts, recycleView,BottomNavigation);
+
 
 F.F:
     _ add nav_graph to the main page to nav between addmealfragment and view todays meals
@@ -57,3 +63,5 @@ F.F:
     _ Days need a good design + new features could be added
     _ the drawer in the mealsFragment need to be activated
     _ today's meal button should be functional
+    _ check the state for the day in each action (NotReached Reached exceeded)
+    _ add some more features at stats page

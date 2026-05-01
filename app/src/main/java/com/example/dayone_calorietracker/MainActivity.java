@@ -27,6 +27,7 @@ import com.example.dayone_calorietracker.DataBase.AppDataBase;
 import com.example.dayone_calorietracker.DataBase.Enitities.Day;
 import com.example.dayone_calorietracker.Fragments.AddMealFragment;
 import com.example.dayone_calorietracker.Fragments.MealsPerDayFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -78,6 +79,22 @@ public class MainActivity extends AppCompatActivity {
 
         // connecting database
         db =AppDataBase.getInstance(this);
+
+        BottomNavigationView bottomNavigationView=findViewById(R.id.nav_view);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+
+            if (item.getItemId() == R.id.navigation_home) {
+                Toast.makeText(this,"Stats",Toast.LENGTH_SHORT).show();
+                return true;
+            }
+
+            if (item.getItemId() == R.id.navigation_Stats) {
+                startActivity(new Intent(this, Stats.class));
+                return true;
+            }
+
+            return false;
+        });
 
         UWeight = findViewById(R.id.User_Weight);
         UHeight = findViewById(R.id.User_Height);
@@ -148,8 +165,6 @@ public class MainActivity extends AppCompatActivity {
 
 //        load data from database
         fetchAndLoadData(dateString);
-
-
 
         DrawerLayout drawer = findViewById(R.id.Main_Drawer);
         Toolbar toolbar = findViewById(R.id.home_Toolbar);
