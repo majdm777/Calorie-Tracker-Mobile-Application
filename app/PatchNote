@@ -57,15 +57,20 @@ V0.0.9:
          _ implemented the stats activity with all its features (BarCharts, recycleView,BottomNavigation);
 
 V0.0.10:
-        _ Changed the structure of the app consist of one main activity and all the others are fragments (better navigation and better Ui) see the structure for more details;
+         _ Changed the structure of the app consist of one main activity and all the others are fragments (better navigation and better Ui) see the structure for more details;
+
+V0.0.10.1:
+          _ the meal can be edited
+
+V0.0.10.2:
+          _ calorie bug fixed
+          _ the day logic implemented
+          _ welcome page returned
+
 
 
 
 F.F:
-    _ add nav_graph to the main page to nav between addmealfragment and view todays meals
     _ template for the app
     _ Days need a good design + new features could be added
-    _ the drawer in the mealsFragment need to be activated
-    _ today's meal button should be functional
-    _ check the state for the day in each action (NotReached Reached exceeded)
     _ add some more features at stats page

@@ -17,6 +17,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.dayone_calorietracker.DataBase.AppDataBase;
 import com.example.dayone_calorietracker.DataBase.Enitities.Meal;
+import com.example.dayone_calorietracker.Models.DaysViewModel;
 import com.example.dayone_calorietracker.Models.MealsViewModel;
 import com.example.dayone_calorietracker.R;
 
@@ -32,6 +33,7 @@ public class AddMealFragment extends Fragment {
     RadioButton isMeal, isDrink;
 
     MealsViewModel viewModel;
+    DaysViewModel daysViewModel;
     private Meal currentMeal; // To hold the meal being edited
 
     public AddMealFragment() {}
@@ -42,6 +44,8 @@ public class AddMealFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.add_meal_fragment, container, false);
         viewModel = new ViewModelProvider(this).get(MealsViewModel.class);
+        daysViewModel = new ViewModelProvider(this).get(DaysViewModel.class);
+
 
         // Initialize Views
         name = view.findViewById(R.id.input_name);
@@ -70,7 +74,7 @@ public class AddMealFragment extends Fragment {
                 btnAdd_Meal.setVisibility(View.GONE);
                 btnSaveChanges.setVisibility(View.VISIBLE);
 
-                mint _MealId = getArguments().getInt("MealId");
+                int _MealId = getArguments().getInt("MealId");
 
                 viewModel.getMeal(_MealId).observe(getViewLifecycleOwner(), meal -> {
                     if (meal != null) {
@@ -145,8 +149,7 @@ public class AddMealFragment extends Fragment {
         new Thread(() -> {
             AppDataBase db = AppDataBase.getInstance(requireContext());
             db.mealdao().insert(meal);
-            db.daydao().updateDay(dateString, (int) meal.Calorie, meal.Protein, meal.Carbs, meal.Sugar, meal.Fats);
-
+            daysViewModel.updateDay(dateString, (int) meal.Calorie, meal.Protein, meal.Carbs, meal.Sugar, meal.Fats);
             requireActivity().runOnUiThread(() -> {
                 Toast.makeText(getContext(), "Saved & Added to Day", Toast.LENGTH_SHORT).show();
                 NavHostFragment.findNavController(this).popBackStack();

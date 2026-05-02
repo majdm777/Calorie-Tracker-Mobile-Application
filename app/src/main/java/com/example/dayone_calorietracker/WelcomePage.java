@@ -27,7 +27,7 @@ public class WelcomePage extends AppCompatActivity {
         getStarted=findViewById(R.id.Start_bttn);
         getStarted.setOnClickListener(v -> {
             startActivity(new Intent(this, UserInfo.class));
-            finish();
+//            finish();
         });
 
     }

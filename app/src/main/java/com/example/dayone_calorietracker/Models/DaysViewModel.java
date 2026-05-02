@@ -34,10 +34,26 @@ public class DaysViewModel extends AndroidViewModel {
         return days;
     }
 
+
+
     // REMOVED 'static' so it can access the 'db' instance variable
     public void updateDay(String dayDate, int calorie, double protein, double carbs, double sugar, double fats) {
         executor.execute(() -> {
-            db.daydao().updateDay(dayDate, calorie, protein, carbs, sugar, fats);
+            Day day = db.daydao().getDayInfoByDate(dayDate);
+            double ratio = ((double)day.calorie / day.Target)*100 ;
+            String state = "NotReached";
+
+            if(ratio<75){
+                state ="NotEnough";
+            }else if(ratio<90){
+                state ="NotReached";
+            }else if(ratio<110){
+                state ="Reached";
+            }else{
+                state ="Exceeded";
+            }
+
+            db.daydao().updateDay(dayDate, calorie, protein, carbs, sugar, fats,state);
         });
     }
 
@@ -62,7 +78,8 @@ public class DaysViewModel extends AndroidViewModel {
 
             // Calculation (Assuming 'amount' is a multiplier, e.g., 1.5 for 150g)
             // If your amount is raw grams (e.g. 150), you should divide by 100: (amount / 100.0)
-            double factor = amount / 100.0;
+//            double factor = amount / 100.0;     possible update later
+            double factor = amount;
 
             double cal = meal.Calorie * factor;
             double protein = meal.Protein * factor;
@@ -71,7 +88,8 @@ public class DaysViewModel extends AndroidViewModel {
             double sugar = meal.Sugar * factor;
 
             // Update the daily totals
-            db.daydao().updateDay(dateString, (int) cal, protein, carbs, sugar, fats);
+
+            this.updateDay(dateString, (int) cal, protein, carbs, sugar, fats);
 
             // Record this specific meal entry
             MealsPerDay mpd = new MealsPerDay();

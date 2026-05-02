@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         boolean isFirstTime = prefs.getBoolean("isFirstTime", true);
 
         if (isFirstTime) {
-            startActivity(new Intent(this, UserInfo.class));
+            startActivity(new Intent(this, WelcomePage.class));
             finish(); // prevents going back
             return;
         }

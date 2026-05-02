@@ -48,5 +48,13 @@
     <fragment
         android:id="@+id/mealsPerDayFragment"
         android:name="com.example.dayone_calorietracker.Fragments.MealsPerDayFragment" />
+    <activity
+        android:id="@+id/UserInfo"
+        android:name="com.example.dayone_calorietracker.UserInfo"
+        android:exported="false"/>
+    <activity
+        android:id="@+id/welcomePage"
+        android:name="com.example.dayone_calorietracker.WelcomePage"
+        android:exported="false"/>
 
 </navigation>
