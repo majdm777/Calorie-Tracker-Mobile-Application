@@ -9,12 +9,12 @@
             android:icon="@android:drawable/ic_menu_myplaces"/>
 
         <item
-            android:id="@+id/nav_meals"
+            android:id="@+id/mealsFragment"
             android:title="View Meals"
             android:icon="@android:drawable/ic_menu_agenda"/>
 
         <item
-            android:id="@+id/nav_days"
+            android:id="@+id/daysFragment"
             android:title="View Days"
             android:icon="@android:drawable/ic_menu_agenda"/>
     </group>

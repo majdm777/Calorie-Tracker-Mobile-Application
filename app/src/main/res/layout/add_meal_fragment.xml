@@ -11,7 +11,7 @@
         android:padding="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10mm">
+        android:layout_marginTop="0dp">
 
         <TextView
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             android:gravity="center"
             />
 
-<!--        MEAL's Type  -->
+        <!--        MEAL's Type  -->
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -205,6 +205,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/btnadd_Meal"
             android:text="Add Meal WithOut Saving"/>
+
+
 
     </LinearLayout>
 

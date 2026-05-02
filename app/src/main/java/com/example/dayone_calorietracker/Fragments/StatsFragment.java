@@ -1,27 +1,27 @@
-package com.example.dayone_calorietracker;
+package com.example.dayone_calorietracker.Fragments;
 
-import android.content.Intent;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayone_calorietracker.Adapters.DaysAdapter;
 import com.example.dayone_calorietracker.DataBase.Enitities.Day;
 import com.example.dayone_calorietracker.Models.DaysViewModel;
+import com.example.dayone_calorietracker.R;
+import com.example.dayone_calorietracker.Stats;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;
 import com.github.mikephil.charting.components.LimitLine;
@@ -34,7 +34,6 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class Stats extends AppCompatActivity {
+public class StatsFragment extends Fragment {
 
     BarChart barChart;
     RecyclerView recyclerView;
@@ -53,33 +52,29 @@ public class Stats extends AppCompatActivity {
     List<Day> GDays;
 
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_stats);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.stats), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        barChart = findViewById(R.id.barChart);
+        View view = inflater.inflate(R.layout.stats_fragment, container, false);
 
+        barChart = view.findViewById(R.id.barChart);
 
-        recyclerView = findViewById(R.id.recStats);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = view.findViewById(R.id.recStats);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         adapter = new DaysAdapter(new ArrayList<>());
         recyclerView.setAdapter(adapter);
 
         viewModel = new ViewModelProvider(this).get(DaysViewModel.class);
-        viewModel.getDays().observe(this, days -> {
+        viewModel.getDays().observe(getViewLifecycleOwner(), days -> {
             this.GDays = days;
             getCurrentWeek(days);
             adapter.setDays(days);
         });
 
+
+        return view;
     }
 
     private void getCurrentWeek(List<Day> allDays) {
@@ -145,7 +140,7 @@ public class Stats extends AppCompatActivity {
         YAxis leftAxis = barChart.getAxisLeft();
         leftAxis.removeAllLimitLines(); // Prevents multiple lines stacking
 
-        SharedPreferences sp = getSharedPreferences("UserInfo", MODE_PRIVATE);
+        SharedPreferences sp =requireContext().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         float targetValue = Float.parseFloat(sp.getString("User_Target", "2000"));
 
         LimitLine targetLine = new LimitLine(targetValue, "Target");
@@ -174,7 +169,7 @@ public class Stats extends AppCompatActivity {
 
                 Day clickedDay = days.get(index); // 🔥 match your list
 
-            Toast.makeText(Stats.this, ""+clickedDay.calorie, Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), ""+clickedDay.calorie, Toast.LENGTH_SHORT).show();
 
 
                 // 👉 open MealsPerDayFragment (optional)

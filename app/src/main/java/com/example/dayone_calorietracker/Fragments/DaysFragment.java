@@ -74,7 +74,7 @@ public class DaysFragment extends Fragment {
             bundle.putInt("ID", Day.Id);
 
             NavHostFragment.findNavController(this)
-                    .navigate(R.id.MealsPerDayFragment, bundle);
+                    .navigate(R.id.action_daysFragment_to_mealsPerDayFragment, bundle);
         });
 
         return view;

@@ -1,21 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/mealsFragment">
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.dayone_calorietracker.Fragments.HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_mealsPerDayFragment"
+            app:destination="@id/mealsPerDayFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_addMealFragment"
+            app:destination="@id/addMealFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="com.example.dayone_calorietracker.Fragments.StatsFragment" />
 
     <fragment
         android:id="@+id/mealsFragment"
-        android:name="com.example.dayone_calorietracker.Fragments.MealsFragment"
-        android:label="Meals" />
+        android:name="com.example.dayone_calorietracker.Fragments.MealsFragment" >
+        <action
+            android:id="@+id/action_mealsFragment_to_addMealFragment"
+            app:destination="@id/addMealFragment" />
+        <action
+            android:id="@+id/action_mealsFragment_to_chooseWeightFragment"
+            app:destination="@id/chooseWeightFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/addMealFragment"
-        android:name="com.example.dayone_calorietracker.Fragments.AddMealFragment"
-        android:label="Add Meal" />
+        android:name="com.example.dayone_calorietracker.Fragments.AddMealFragment" />
 
     <fragment
-        android:id="@+id/chooseWeightMeal"
-        android:name="com.example.dayone_calorietracker.Fragments.chooseWeightMeal"
-        android:label="Choose Weight" />
+        android:id="@+id/chooseWeightFragment"
+        android:name="com.example.dayone_calorietracker.Fragments.chooseWeightMeal" />
+
+    <fragment
+        android:id="@+id/daysFragment"
+        android:name="com.example.dayone_calorietracker.Fragments.DaysFragment" >
+        <action
+            android:id="@+id/action_daysFragment_to_mealsPerDayFragment"
+            app:destination="@id/mealsPerDayFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mealsPerDayFragment"
+        android:name="com.example.dayone_calorietracker.Fragments.MealsPerDayFragment" />
+
 </navigation>

@@ -48,8 +48,9 @@ public class UserInfo extends AppCompatActivity {
 
         //sharedPreference
         sp = getSharedPreferences("UserInfo",MODE_PRIVATE);
+        boolean isFirstTime = sp.getBoolean("isFirstTime", true);
 
-        if(!isFirstTime()){
+        if(!isFirstTime){
             LoadInfo();
         }
 
@@ -60,11 +61,6 @@ public class UserInfo extends AppCompatActivity {
         });
 
 
-    }
-
-    public boolean isFirstTime(){
-
-        return !sp.contains("User_Target");
     }
 
     public void LoadInfo(){
@@ -99,6 +95,7 @@ public class UserInfo extends AppCompatActivity {
             editor.putString("User_Height", height);
             editor.putString("User_Age", age);
             editor.putString("User_Target", target);
+            editor.putBoolean("isFirstTime",false);
             editor.apply();
 
         }catch (Exception e){

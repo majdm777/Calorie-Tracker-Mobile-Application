@@ -1,6 +1,6 @@
 package com.example.dayone_calorietracker.Fragments;
 
-import static com.example.dayone_calorietracker.MainActivity.db;
+
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -61,7 +61,7 @@ public class MealsFragment extends Fragment {
         // ➕ Add Meal button
         btnAddMeal.setOnClickListener(v -> {
             NavHostFragment.findNavController(this)
-                    .navigate(R.id.addMealFragment);
+                    .navigate(R.id.action_mealsFragment_to_addMealFragment);
         });
 
         // ❌ Delete button
@@ -84,7 +84,7 @@ public class MealsFragment extends Fragment {
             bundle.putDouble("sugar", meal.Sugar);
 
             NavHostFragment.findNavController(this)
-                    .navigate(R.id.chooseWeightMeal, bundle);
+                    .navigate(R.id.action_mealsFragment_to_chooseWeightFragment, bundle);
         });
 
         SearchView searchView = view.findViewById(R.id.searchView);

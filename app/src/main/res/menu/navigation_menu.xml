@@ -2,14 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:id="@+id/homeFragment"
+        android:title="Home"
+        android:icon="@android:drawable/ic_menu_manage"/>
 
-        android:title="Home" />
     <item
-        android:id="@+id/navigation_Stats"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:id="@+id/statsFragment"
         android:title="Stats"
-        />
+        android:icon="@android:drawable/ic_menu_day"/>
 
 </menu>

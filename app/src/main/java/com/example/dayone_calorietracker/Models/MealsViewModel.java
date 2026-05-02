@@ -1,6 +1,5 @@
 package com.example.dayone_calorietracker.Models;
 
-import static com.example.dayone_calorietracker.MainActivity.db;
 
 import android.app.Application;
 
@@ -19,12 +18,14 @@ import java.util.concurrent.Executors;
 public class MealsViewModel extends AndroidViewModel {
 
     private LiveData<List<Meal>> meals;
+    private final AppDataBase db;
+
 
     public MealsViewModel(@NonNull Application application) {
         super(application);
 
 
-        AppDataBase db =AppDataBase.getInstance(application.getApplicationContext());
+        db =AppDataBase.getInstance(application.getApplicationContext());
         meals = db.mealdao().getAllMeal();
     }
 

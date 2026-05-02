@@ -133,7 +133,8 @@ public class AddMealFragment extends Fragment {
 
 
 
-        AppDataBase db = Room.databaseBuilder(requireContext(), AppDataBase.class, "AppDataBase").build();
+        AppDataBase db = AppDataBase.getInstance(requireContext());
+
 
         new Thread(() -> {
             db.mealdao().insert(meal);

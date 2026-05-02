@@ -21,6 +21,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.room.Room;
 
 import com.example.dayone_calorietracker.DataBase.AppDataBase;
@@ -41,234 +46,53 @@ import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
 
+    NavController navController;
+    AppBarConfiguration appBarConfiguration;
 
-
-    SimpleDateFormat sdf;
-    String dateString;
-
-    Day today;
-    ProgressBar progressBar;
-    TextView UWeight;
-    TextView UHeight;
-    TextView UAge;
-    TextView UTarget;
-    TextView Remaining_Calories;
-    TextView Protein;
-    TextView Carbs;
-    TextView Sugar;
-    TextView Fats;
-    FloatingActionButton btnAddMeal;
-
-    View CalorieLayout;
-
-    Button viewTodayMeal;
-    SharedPreferences sp;
-
-    public static AppDataBase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_layout), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        SharedPreferences prefs = getSharedPreferences("UserInfo", MODE_PRIVATE);
 
-        // connecting database
-        db =AppDataBase.getInstance(this);
+        boolean isFirstTime = prefs.getBoolean("isFirstTime", true);
 
-        BottomNavigationView bottomNavigationView=findViewById(R.id.nav_view);
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-
-            if (item.getItemId() == R.id.navigation_home) {
-                Toast.makeText(this,"Stats",Toast.LENGTH_SHORT).show();
-                return true;
-            }
-
-            if (item.getItemId() == R.id.navigation_Stats) {
-                startActivity(new Intent(this, Stats.class));
-                return true;
-            }
-
-            return false;
-        });
-
-        UWeight = findViewById(R.id.User_Weight);
-        UHeight = findViewById(R.id.User_Height);
-        UAge   = findViewById(R.id.User_Age);
-        UTarget = findViewById(R.id.calorie_status);
-        progressBar = findViewById(R.id.progress_Bar);
-        Remaining_Calories = findViewById(R.id.remaining_calories);
-        Protein = findViewById(R.id.Protein);
-        Carbs = findViewById(R.id.Carbs);
-        Sugar = findViewById(R.id.Sugar);
-        Fats =findViewById(R.id.Fats);
-        viewTodayMeal = findViewById(R.id.view_Todays_Meal);
-        CalorieLayout = findViewById(R.id.Calorie_layout);
-        CalorieLayout.setOnClickListener(v->{
-            Toast.makeText(this,Remaining_Calories.getText(),Toast.LENGTH_SHORT).show();
-        });
-
-        btnAddMeal =findViewById(R.id.add_meal_button);
-        btnAddMeal.setOnClickListener(v -> {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, new AddMealFragment())
-                    .addToBackStack(null)
-                    .commit();
-        });
-        viewTodayMeal.setOnClickListener(v -> {
-
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            String dateString = sdf.format(new Date());
-
-            new Thread(() -> {
-                Day day = db.daydao().getDayInfoByDate(dateString);
-
-                runOnUiThread(() -> {
-
-                    if (day == null) {
-                        Toast.makeText(this, "No data for today", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("ID", day.Id);
-
-                    MealsPerDayFragment fragment = new MealsPerDayFragment();
-                    fragment.setArguments(bundle);
-
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragment_container, fragment)
-                            .addToBackStack(null)
-                            .commit();
-                });
-
-            }).start();
-        });
-
-
-
-        sp = getSharedPreferences("UserInfo",MODE_PRIVATE);
-
-        if(isFirstTime()){
-            Intent i = new Intent(this,WelcomePage.class);
-            startActivity(i);
+        if (isFirstTime) {
+            startActivity(new Intent(this, UserInfo.class));
+            finish(); // prevents going back
+            return;
         }
 
-        sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        dateString = sdf.format(new Date());
-
-//        load data from database
-        fetchAndLoadData(dateString);
-
-        DrawerLayout drawer = findViewById(R.id.Main_Drawer);
-        Toolbar toolbar = findViewById(R.id.home_Toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.open, R.string.close);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navView = findViewById(R.id.nav_view);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
 
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment);
 
-        NavigationView navigationView = findViewById(R.id.drawer);
-        navigationView.setNavigationItemSelectedListener(item -> {
+        if (navHostFragment != null) {
+            navController = navHostFragment.getNavController();
 
-            int id = item.getItemId();
+            // Top-level destinations
+            appBarConfiguration = new AppBarConfiguration.Builder(
+                    R.id.homeFragment,
+                    R.id.statsFragment
+            ).setOpenableLayout(drawer).build();
 
-            if (id == R.id.nav_personal) {
-                startActivity(new Intent(this, UserInfo.class));
-
-            } else if (id == R.id.nav_meals) {
-                startActivity(new Intent(this, Meals.class));
-
-            } else if (id == R.id.nav_about) {
-//                startActivity(new Intent(this, AboutActivity.class));
-            } else if (id ==R.id.nav_days) {
-                startActivity(new Intent(this, Days.class));
-            }
-
-            drawer.closeDrawers();
-
-            return true;
-        });
-
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        fetchAndLoadData(sdf.format(new Date()));
+            // Connect components
+            NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+            NavigationUI.setupWithNavController(navView, navController);
+            NavigationUI.setupWithNavController(bottomNav, navController);
+        }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home_app_bar, menu);
-        return super.onCreateOptionsMenu(menu);
+    public boolean onSupportNavigateUp() {
+        return NavigationUI.navigateUp(navController, appBarConfiguration)
+                || super.onSupportNavigateUp();
     }
-
-
-    public boolean isFirstTime(){
-
-        return !sp.contains("User_Target");
-    }
-
-    public void loadUserInfo(){
-
-        String weight="Weight: "+sp.getString("User_Weight","0")+"Kg";
-        UWeight.setText(weight);
-
-        String Height = "Height: "+sp.getString("User_Height","0")+"cm";
-        UHeight.setText(Height);
-
-        String Age = "Age: "+sp.getString("User_Age","0");
-        UAge.setText(Age);
-
-        String Calorie_Status = today.calorie+"/"+sp.getString("User_Target","Null")+" Kcal";
-        UTarget.setText(Calorie_Status);
-
-        progressBar.setMax(Integer.parseInt(sp.getString("User_Target","2000")));
-        progressBar.setProgress(today.calorie);
-
-        int remaining = today.Target - today.calorie;
-        if(remaining<0) remaining=0;
-        String remaining_calories = remaining+" kcal remaining";
-        Remaining_Calories.setText(remaining_calories);
-
-        Protein.setText("Protein: "+today.Protein+" g");
-        Carbs.setText("Carbs: "+today.Carbs+" g");
-        Sugar.setText("Sugar: "+today.Sugar+" g");
-        Fats.setText("Fat: "+today.Fats+" g");
-
-    }
-
-    public void fetchAndLoadData(String dateString) {
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            // 1. Get data from DB in background
-            Day _today = db.daydao().getDayInfoByDate(dateString);
-
-            if (_today == null) {
-                _today = new Day();
-                _today.State ="NotReached";
-                _today.Date = dateString;
-                _today.Target = Integer.parseInt(sp.getString("User_Target", "2000"));
-                db.daydao().insert(_today);
-            }
-
-            // 2. Pass the data back to the Main Thread to update UI
-            final Day result = _today;
-            runOnUiThread(() -> {
-                this.today = result;
-                loadUserInfo(); // Move this here so it waits for the data
-            });
-        });
-    }
-
 }
