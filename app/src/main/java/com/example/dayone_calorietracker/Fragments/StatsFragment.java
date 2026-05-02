@@ -20,7 +20,6 @@ import com.example.dayone_calorietracker.Adapters.DaysAdapter;
 import com.example.dayone_calorietracker.DataBase.Enitities.Day;
 import com.example.dayone_calorietracker.Models.DaysViewModel;
 import com.example.dayone_calorietracker.R;
-import com.example.dayone_calorietracker.Stats;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LegendEntry;

@@ -203,8 +203,15 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnadd_Meal"
+            android:id="@+id/btnAdd_Meal"
             android:text="Add Meal WithOut Saving"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnSave_Changes"
+            android:text="Save Changes"
+            android:visibility="gone"/>
 
 
 

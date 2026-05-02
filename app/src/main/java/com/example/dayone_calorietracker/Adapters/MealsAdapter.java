@@ -19,6 +19,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
 
     List<Meal> meals;
     private OnItemClickListener Itemlistener;
+    private OnButtonEditListener ButtonEditListener;
 
     private OnButtonDeleteListener ButtonDeleteListener;
 
@@ -33,7 +34,7 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.meal_layout, parent, false);
-        return new ViewHolder(view, meals, Itemlistener,ButtonDeleteListener);
+        return new ViewHolder(view, meals, Itemlistener,ButtonDeleteListener,ButtonEditListener);
     }
 
     @Override
@@ -43,6 +44,8 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
         holder.Name.setText(meal.Name);
         holder.Calorie.setText(meal.Calorie + " kcal");
         holder.Type.setText(meal.Type);
+        holder.Id.setText(""+meal.Id);
+        holder.btnEdit.setText("Edit");
 
     }
 
@@ -52,18 +55,22 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView Name, Calorie, Type;
-        Button  btnDelete;
+        TextView Name, Calorie, Type,Id;
+        Button  btnDelete,btnEdit;
         public ViewHolder(@NonNull View view,
                           List<Meal> meals,
                           OnItemClickListener listener,
-                          OnButtonDeleteListener OnButtonDeleteListener) {
+                          OnButtonDeleteListener OnButtonDeleteListener,
+                          OnButtonEditListener OnButtonEditListener) {
             super(view);
 
             Name = view.findViewById(R.id.meal_name);
             Calorie = view.findViewById(R.id.meal_calories);
             Type = view.findViewById(R.id.meal_type);
             btnDelete = view.findViewById(R.id.meal_delete);
+            btnEdit=view.findViewById(R.id.meal_Edit);
+
+            Id=view.findViewById(R.id.meal_id);
 
             itemView.setOnClickListener(v -> {
                 int position =getAdapterPosition();
@@ -77,6 +84,12 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
                     OnButtonDeleteListener.onButtonDeleteClick(meals.get(getAdapterPosition()));
                 }
             });
+            btnEdit.setOnClickListener(v -> {
+                if (OnButtonEditListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
+                    OnButtonEditListener.onButtonEditClick(meals.get(getAdapterPosition()));
+                }
+            });
+
 
         }
     }
@@ -92,6 +105,10 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
     public void setOnButtonDeleteListener(OnButtonDeleteListener listener){
         this.ButtonDeleteListener=listener;
     }
+    public void setOnButtonEditListener(OnButtonEditListener listener){
+        this.ButtonEditListener=listener;
+    }
+
 
     public interface OnItemClickListener {
         void onItemClick(Meal meal);
@@ -100,6 +117,10 @@ public class MealsAdapter extends RecyclerView.Adapter<MealsAdapter.ViewHolder> 
 
     public interface OnButtonDeleteListener{
         void onButtonDeleteClick(Meal meal);
+    }
+
+    public interface  OnButtonEditListener{
+        void onButtonEditClick(Meal meal);
     }
 }
 

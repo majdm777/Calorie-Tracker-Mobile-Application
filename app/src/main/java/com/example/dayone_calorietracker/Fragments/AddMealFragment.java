@@ -1,7 +1,5 @@
 package com.example.dayone_calorietracker.Fragments;
 
-
-
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,13 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.room.Room;
 
 import com.example.dayone_calorietracker.DataBase.AppDataBase;
 import com.example.dayone_calorietracker.DataBase.Enitities.Meal;
+import com.example.dayone_calorietracker.Models.MealsViewModel;
 import com.example.dayone_calorietracker.R;
-
 
 import java.util.Date;
 import java.util.Locale;
@@ -29,12 +27,12 @@ public class AddMealFragment extends Fragment {
 
     EditText name, calories, protein, carbs, fat, sugar;
     TextView tv_Calorie;
-    String type;
-    Button btnSave,btnSaveAddMeal;
+    String type = "Meal";
+    Button btnSave, btnSaveAddMeal, btnSaveChanges, btnAdd_Meal;
     RadioButton isMeal, isDrink;
 
-
-
+    MealsViewModel viewModel;
+    private Meal currentMeal; // To hold the meal being edited
 
     public AddMealFragment() {}
 
@@ -43,130 +41,152 @@ public class AddMealFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.add_meal_fragment, container, false);
+        viewModel = new ViewModelProvider(this).get(MealsViewModel.class);
 
+        // Initialize Views
         name = view.findViewById(R.id.input_name);
         calories = view.findViewById(R.id.input_calories);
-        type = "Meal";
-
-
         isMeal = view.findViewById(R.id.isMeal);
         isDrink = view.findViewById(R.id.isDrink);
-
-        isMeal.setOnClickListener(this::setType);
-        isDrink.setOnClickListener(this::setType);
-
-
-
-
         protein = view.findViewById(R.id.input_protein);
         carbs = view.findViewById(R.id.input_carbs);
         fat = view.findViewById(R.id.input_fat);
         sugar = view.findViewById(R.id.input_sugar);
         btnSave = view.findViewById(R.id.btn_save);
         tv_Calorie = view.findViewById(R.id.tv_Calorie);
-        btnSaveAddMeal =view.findViewById(R.id.btn_save_add_Meal);
+        btnSaveAddMeal = view.findViewById(R.id.btn_save_add_Meal);
+        btnSaveChanges = view.findViewById(R.id.btnSave_Changes);
+        btnAdd_Meal = view.findViewById(R.id.btnAdd_Meal);
 
+        isMeal.setOnClickListener(this::setType);
+        isDrink.setOnClickListener(this::setType);
 
+        // --- COMPLETED EDIT LOGIC ---
+        if (getArguments() != null) {
+            String _Action = getArguments().getString("Action");
+            if ("Edit".equals(_Action)) {
+                btnSave.setVisibility(View.GONE);
+                btnSaveAddMeal.setVisibility(View.GONE);
+                btnAdd_Meal.setVisibility(View.GONE);
+                btnSaveChanges.setVisibility(View.VISIBLE);
 
+                mint _MealId = getArguments().getInt("MealId");
+
+                viewModel.getMeal(_MealId).observe(getViewLifecycleOwner(), meal -> {
+                    if (meal != null) {
+                        this.currentMeal = meal;
+                        name.setText(meal.Name);
+                        calories.setText(String.valueOf((int)meal.Calorie));
+                        protein.setText(String.valueOf(meal.Protein));
+                        carbs.setText(String.valueOf(meal.Carbs));
+                        fat.setText(String.valueOf(meal.Fats));
+                        sugar.setText(String.valueOf(meal.Sugar));
+
+                        type = meal.Type;
+                        if (type.equals("Meal")) isMeal.setChecked(true);
+                        else isDrink.setChecked(true);
+                        adjustTextView();
+                    }else{
+                        Toast.makeText(getContext(), "Meal not found", Toast.LENGTH_SHORT).show();
+                        NavHostFragment.findNavController(this).popBackStack();
+
+                    }
+                });
+            }
+        }
 
         btnSave.setOnClickListener(v -> saveMeal());
         btnSaveAddMeal.setOnClickListener(v -> SaveAddMeal());
-
-
-
+        btnSaveChanges.setOnClickListener(v -> updateMeal());
 
         adjustTextView();
         return view;
     }
 
-    private void saveMeal() {
-        String n = name.getText().toString();
-        int cal = Integer.parseInt(calories.getText().toString());
-        String Type = type;
+    private void updateMeal() {
+        if (!validateInputs()) return;
 
-
-        Meal meal = new Meal();
-
-        meal.Name = n;
-        meal.Calorie=cal;
-        meal.Type=Type;
-        meal.Protein=Double.parseDouble(protein.getText().toString());
-        meal.Carbs=Double.parseDouble(carbs.getText().toString());
-        meal.Fats=Double.parseDouble(fat.getText().toString());
-        meal.Sugar=Double.parseDouble(sugar.getText().toString());
-
-
-
-        AppDataBase db = AppDataBase.getInstance(requireContext());
+        currentMeal.Name = name.getText().toString();
+        currentMeal.Calorie = Double.parseDouble(calories.getText().toString());
+        currentMeal.Type = type;
+        currentMeal.Protein = Double.parseDouble(protein.getText().toString());
+        currentMeal.Carbs = Double.parseDouble(carbs.getText().toString());
+        currentMeal.Fats = Double.parseDouble(fat.getText().toString());
+        currentMeal.Sugar = Double.parseDouble(sugar.getText().toString());
 
         new Thread(() -> {
-            db.mealdao().insert(meal);
-
+            AppDataBase.getInstance(requireContext()).mealdao().update(currentMeal);
             requireActivity().runOnUiThread(() -> {
-                Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
-
-                // close fragment
+                Toast.makeText(getContext(), "Changes Saved", Toast.LENGTH_SHORT).show();
                 NavHostFragment.findNavController(this).popBackStack();
             });
-
         }).start();
     }
 
-    private void SaveAddMeal(){
-        String n = name.getText().toString();
-        int cal = Integer.parseInt(calories.getText().toString());
-        String Type = type;
+    private void saveMeal() {
+        if (!validateInputs()) return;
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String dateString = sdf.format(new Date());
-
-        Meal meal = new Meal();
-
-        meal.Name = n;
-        meal.Calorie=cal;
-        meal.Type=Type;
-        meal.Protein=Double.parseDouble(protein.getText().toString());
-        meal.Carbs=Double.parseDouble(carbs.getText().toString());
-        meal.Fats=Double.parseDouble(fat.getText().toString());
-        meal.Sugar=Double.parseDouble(sugar.getText().toString());
-
-
-
-
-        AppDataBase db = AppDataBase.getInstance(requireContext());
-
-
+        Meal meal = createMealFromInputs();
         new Thread(() -> {
-            db.mealdao().insert(meal);
-
-            db.daydao().updateDay(dateString, (int) meal.Calorie,meal.Protein,meal.Carbs,meal.Sugar,meal.Fats);
-
-
+            AppDataBase.getInstance(requireContext()).mealdao().insert(meal);
             requireActivity().runOnUiThread(() -> {
                 Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
-
                 NavHostFragment.findNavController(this).popBackStack();
             });
-
         }).start();
+    }
+
+    private void SaveAddMeal() {
+        if (!validateInputs()) return;
+
+        String dateString = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        Meal meal = createMealFromInputs();
+
+        new Thread(() -> {
+            AppDataBase db = AppDataBase.getInstance(requireContext());
+            db.mealdao().insert(meal);
+            db.daydao().updateDay(dateString, (int) meal.Calorie, meal.Protein, meal.Carbs, meal.Sugar, meal.Fats);
+
+            requireActivity().runOnUiThread(() -> {
+                Toast.makeText(getContext(), "Saved & Added to Day", Toast.LENGTH_SHORT).show();
+                NavHostFragment.findNavController(this).popBackStack();
+            });
+        }).start();
+    }
+
+    // Helper to extract UI data
+    private Meal createMealFromInputs() {
+        Meal meal = new Meal();
+        meal.Name = name.getText().toString();
+        meal.Calorie = Double.parseDouble(calories.getText().toString());
+        meal.Type = type;
+        meal.Protein = Double.parseDouble(protein.getText().toString());
+        meal.Carbs = Double.parseDouble(carbs.getText().toString());
+        meal.Fats = Double.parseDouble(fat.getText().toString());
+        meal.Sugar = Double.parseDouble(sugar.getText().toString());
+        return meal;
+    }
+
+    // Helper to prevent crashes on empty inputs
+    private boolean validateInputs() {
+        if (name.getText().toString().isEmpty() || calories.getText().toString().isEmpty()) {
+            Toast.makeText(getContext(), "Name and Calories are required", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        // Set defaults to 0 if macros are empty to avoid Double.parseDouble crash
+        if (protein.getText().toString().isEmpty()) protein.setText("0");
+        if (carbs.getText().toString().isEmpty()) carbs.setText("0");
+        if (fat.getText().toString().isEmpty()) fat.setText("0");
+        if (sugar.getText().toString().isEmpty()) sugar.setText("0");
+        return true;
     }
 
     public void setType(View view) {
-        if (view.getId() == R.id.isMeal) {
-            type = "Meal";
-            adjustTextView();
-        }else{
-
-            type = "Drink";
-            adjustTextView();
-        }
+        type = (view.getId() == R.id.isMeal) ? "Meal" : "Drink";
+        adjustTextView();
     }
 
-    public void adjustTextView(){
-        if(type.equals("Meal")){
-            tv_Calorie.setText("Calorie /100g");
-        }else{
-            tv_Calorie.setText("Calories /100ml");
-        }
+    public void adjustTextView() {
+        tv_Calorie.setText(type.equals("Meal") ? "Calorie /100g" : "Calories /100ml");
     }
 }

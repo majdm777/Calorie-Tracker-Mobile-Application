@@ -60,8 +60,12 @@ public class MealsFragment extends Fragment {
 
         // ➕ Add Meal button
         btnAddMeal.setOnClickListener(v -> {
+
+            Bundle bundle = new Bundle();
+            bundle.putString("Action", "Add");
+
             NavHostFragment.findNavController(this)
-                    .navigate(R.id.action_mealsFragment_to_addMealFragment);
+                    .navigate(R.id.action_mealsFragment_to_addMealFragment,bundle);
         });
 
         // ❌ Delete button
@@ -70,6 +74,17 @@ public class MealsFragment extends Fragment {
             Toast.makeText(requireContext(), "Meal deleted", Toast.LENGTH_SHORT).show();
 
         });
+        // ✏️ Edit button
+        adapter.setOnButtonEditListener(meal -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("Action", "Edit");
+            bundle.putInt("MealId", meal.Id);
+
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_mealsFragment_to_addMealFragment,bundle);
+        });
+
+
 
         // 📦 Click item → open chooseWeight
         adapter.setOnItemClickListener(meal -> {

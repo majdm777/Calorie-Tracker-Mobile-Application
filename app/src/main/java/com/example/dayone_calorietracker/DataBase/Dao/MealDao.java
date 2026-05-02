@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.dayone_calorietracker.DataBase.Enitities.Meal;
 
@@ -18,6 +19,12 @@ public interface MealDao {
 
     @Query("SELECT * FROM Meal WHERE Id = :MealId")
     LiveData<Meal> getMeal(int MealId);
+
+    @Update
+    void update(Meal meal);
+
+
+
 
     @Query("SELECT * FROM Meal")
     LiveData<List<Meal>> getAllMeal();

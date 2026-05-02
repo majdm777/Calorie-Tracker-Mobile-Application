@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
 public class MealsViewModel extends AndroidViewModel {
 
     private LiveData<List<Meal>> meals;
+    private LiveData<Meal> meal;
     private final AppDataBase db;
 
 
@@ -38,6 +39,10 @@ public class MealsViewModel extends AndroidViewModel {
         executor.execute(() -> {
             db.mealdao().deleteById(meal.Id);
         });
+    }
+
+    public LiveData<Meal> getMeal(int mealId){
+        return db.mealdao().getMeal(mealId);
     }
 
     public void AddMeal(Meal meal){

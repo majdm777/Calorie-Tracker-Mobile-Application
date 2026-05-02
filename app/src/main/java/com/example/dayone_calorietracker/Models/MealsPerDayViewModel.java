@@ -37,6 +37,8 @@ public class MealsPerDayViewModel extends AndroidViewModel {
         return mealsPerDay;
     }
 
+
+
     public void addMPD(MealsPerDay MPD) {
         // Use the shared executor instead of creating a new one
         executor.execute(() -> {

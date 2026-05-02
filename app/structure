@@ -1,14 +1,19 @@
 MainActivity
  ├── Bottom Nav:
  │     ├── HomeFragment
+ │     │         ├── AddMealFragment
+ │     │         └── MealsPerDayFragment
  │     └── StatsFragment
  │
  ├── Drawer:
  │     ├── MealsFragment
+ │     │         ├── AddMealFragment
+ │     │         └── ChooseWeightFragment
  │     ├── DaysFragment
+ │     │         └── MealsPerDay
  │     ├── AboutFragment
  │     └── SettingsFragment
- │
+
  └── Inside fragments:
        Meals → AddMeal / ChooseWeight
        Days → MealsPerDay

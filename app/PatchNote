@@ -56,6 +56,10 @@ V0.0.8.1:
 V0.0.9:
          _ implemented the stats activity with all its features (BarCharts, recycleView,BottomNavigation);
 
+V0.0.10:
+        _ Changed the structure of the app consist of one main activity and all the others are fragments (better navigation and better Ui) see the structure for more details;
+
+
 
 F.F:
     _ add nav_graph to the main page to nav between addmealfragment and view todays meals

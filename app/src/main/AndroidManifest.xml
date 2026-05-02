@@ -11,15 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DayOneCalorieTracker">
-        <activity
-            android:name=".Stats"
-            android:exported="false" />
-        <activity
-            android:name=".Days"
-            android:exported="false" />
-        <activity
-            android:name=".Meals"
-            android:exported="false" />
+
+
         <activity
             android:name=".WelcomePage"
             android:exported="false" />
