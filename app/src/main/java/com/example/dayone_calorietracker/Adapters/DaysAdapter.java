@@ -3,6 +3,7 @@ package com.example.dayone_calorietracker.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,8 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
         holder.State.setText(day.State);
         holder.Calories_Target.setText(day.calorie + "/" + day.Target + " kcal");
         holder.NumberOfMeals.setText("Number Of Meals: " + day.NumberOfMeals);
+        holder.bar.setMax(day.Target);
+        holder.bar.setProgress(day.calorie);
     }
 
     @Override
@@ -49,6 +52,7 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView State, Date, Calories_Target, NumberOfMeals;
+        ProgressBar bar;
 
         public ViewHolder(@NonNull View view, List<Day> days, OnItemClickListener listener) {
             super(view);
@@ -57,6 +61,7 @@ public class DaysAdapter extends RecyclerView.Adapter<DaysAdapter.ViewHolder> {
             State = view.findViewById(R.id.State);
             Date = view.findViewById(R.id.Date);
             Calories_Target = view.findViewById(R.id.Calories_Target);
+            bar = view.findViewById(R.id.progressCalories);
 
             itemView.setOnClickListener(v -> {
                 int position = getAdapterPosition();

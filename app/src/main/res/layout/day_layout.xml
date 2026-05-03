@@ -1,63 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<androidx.cardview.widget.CardView android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="0dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    android:backgroundTint="#4CAF50"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="6dp"
-    app:cardUseCompatPadding="true">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        >
+        android:padding="12dp">
 
-        <TextView
-            android:id="@+id/Date"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:text="2005/11/30"
-
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:id="@+id/State"
-            android:gravity="center"
-            android:text="State : NotReached"
-            />
-        <TextView
+        <!-- Top Row -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Number Of Meals : 0"
-            android:id="@+id/Number_Of_Meals"
-            android:gravity="center"/>
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="2000/2500 kcal"
-                android:id="@+id/Calories_Target"
-                android:gravity="center"
+                android:id="@+id/Date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="2026-05-03"
+                android:textStyle="bold"
+                android:textSize="16sp"/>
 
-                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/State"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GOOD"
+                android:textStyle="bold"/>
+        </LinearLayout>
 
+        <!-- Calories -->
+        <TextView
+            android:id="@+id/Calories_Target"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1800 / 2000 kcal"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp"/>
 
+        <!-- Progress Bar -->
+        <ProgressBar
+            android:id="@+id/progressCalories"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_marginTop="6dp"
+            android:max="100"
+            android:progress="75"/>
 
+        <!-- Bottom Info -->
+        <TextView
+            android:id="@+id/Number_Of_Meals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meals: 5"
+            android:layout_marginTop="6dp"
+            android:textSize="13sp"/>
 
     </LinearLayout>
 
-
-
-
-</com.google.android.material.card.MaterialCardView>
+</androidx.cardview.widget.CardView>
 
