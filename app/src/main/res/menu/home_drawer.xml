@@ -6,24 +6,32 @@
         <item
             android:id="@+id/UserInfo"
             android:title="Personal Info"
-            android:icon="@android:drawable/ic_menu_myplaces"/>
+            android:icon="@drawable/user"/>
 
         <item
             android:id="@+id/mealsFragment"
             android:title="View Meals"
-            android:icon="@android:drawable/ic_menu_agenda"/>
+            android:icon="@drawable/meal"/>
 
         <item
             android:id="@+id/daysFragment"
             android:title="View Days"
-            android:icon="@android:drawable/ic_menu_agenda"/>
+            android:icon="@drawable/calendar"/>
+        <item
+            android:id="@+id/Calories"
+            android:title="Calories"
+            android:icon="@drawable/calorie"/>
     </group>
 
     <group android:id="@+id/group3">
         <item
+            android:id="@+id/Setting"
+            android:title="Settings"
+            android:icon="@drawable/settings"/>
+        <item
             android:id="@+id/nav_about"
             android:title="About"
-            android:icon="@android:drawable/ic_menu_info_details"/>
+            android:icon="@drawable/info"/>
     </group>
 
 </menu>

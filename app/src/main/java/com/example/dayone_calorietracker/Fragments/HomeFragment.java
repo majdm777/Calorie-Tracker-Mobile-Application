@@ -2,6 +2,8 @@ package com.example.dayone_calorietracker.Fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
@@ -167,6 +169,14 @@ public class HomeFragment extends Fragment {
 
                     progressBar.setMax(finalDay.Target);
                     progressBar.setProgress(finalDay.calorie);
+
+                    if(finalDay.calorie > finalDay.Target){
+                        progressBar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#F44336")));
+                    }else if(finalDay.calorie == finalDay.Target){
+                        progressBar.setProgressTintList(ColorStateList.valueOf(Color.parseColor("#F44336")));
+                    }else{
+                        progressBar.setProgressTintList(ColorStateList.valueOf(Color.BLACK));
+                    }
                 });
             }
         }).start();

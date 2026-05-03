@@ -70,10 +70,15 @@ V0.0.10.2:
 V0.0.11.1:
           _new design for the day layout
 
+V0.0.11.2:
+           _ added icons + logo for tha app
+           _ the progressBar change its color according to the progress.
+           _ the app almost ready
+
 
 
 F.F:
-    _ template for the app
+    _ color template for the app
     _ Days new feature , show macros then display the meals per day
     _ add some more features at stats page
     _
