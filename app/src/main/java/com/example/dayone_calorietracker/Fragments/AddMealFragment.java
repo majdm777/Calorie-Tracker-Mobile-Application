@@ -96,6 +96,13 @@ public class AddMealFragment extends Fragment {
 
                     }
                 });
+            }else if("Confirm".equals(_Action)){
+
+                calories.setText(String.valueOf(getArguments().getInt("calories")));
+                protein.setText(String.valueOf(getArguments().getInt("protein")));
+                carbs.setText(String.valueOf(getArguments().getInt("carbs")));
+                fat.setText(String.valueOf(getArguments().getInt("fat")));
+                sugar.setText(String.valueOf(getArguments().getInt("sugar")));
             }
         }
 

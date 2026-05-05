@@ -18,7 +18,7 @@
             android:title="View Days"
             android:icon="@drawable/calendar"/>
         <item
-            android:id="@+id/Calories"
+            android:id="@+id/scanFragment"
             android:title="Calories"
             android:icon="@drawable/calorie"/>
     </group>

@@ -22,7 +22,7 @@ v0.0.4:
 V0.0.5:
         _ Implemented Days,DaysAdapter and MealsViewModel
         _ now you can add and save meal or just add meal without meal
-        _   open the add meal from the main activity
+        _ open the add meal from the main activity
 
 V0.0.5.1:
          _ just fixed the design in both meal and day
@@ -86,9 +86,12 @@ V0.0.12.2:
 V0.0.12.3:
           _ now when you click on the bar will display the corresponding day
 
+V0.0.12.4:
+          _ implemented the scan fragment that can scan an product and tells you its nutrition or to choose a image from gallery
+
+
 
 
 
 F.F:
     _ color template for the app
-    _ add some more features at stats page

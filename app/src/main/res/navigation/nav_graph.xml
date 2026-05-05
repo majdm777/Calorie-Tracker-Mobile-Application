@@ -49,6 +49,13 @@
             app:destination="@id/mealsPerDayFragment" />
     </fragment>
     <fragment
+        android:id="@+id/scanFragment"
+        android:name="com.example.dayone_calorietracker.Fragments.ScanFragment" >
+        <action
+            android:id="@+id/action_scanFragment_to_addMealFragment"
+            app:destination="@id/addMealFragment" />
+    </fragment>
+    <fragment
         android:id="@+id/aboutFragment"
         android:name="com.example.dayone_calorietracker.Fragments.AboutFragment" />
 
