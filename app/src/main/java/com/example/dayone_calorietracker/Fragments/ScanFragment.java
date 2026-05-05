@@ -216,24 +216,53 @@ public class ScanFragment extends Fragment {
     // ─────────────────────────────────────────
 
     private void parseNutritionInfo(String text) {
-        String lowerText = text.toLowerCase().trim();
+        text = text.toLowerCase();
 
-        int calories = extractValue(lowerText, "calories[^\\d]*(\\d+)");
-        int protein  = extractValue(lowerText, "protein[^\\d]*(\\d+)");
-        int carbs    = extractValue(lowerText, "total carbohydrate[^\\d]*(\\d+)");
-        int fat      = extractValue(lowerText, "total fat[^\\d]*(\\d+)");
-        int sugar    = extractValue(lowerText, "sugars[^\\d]*(\\d+)");
-        int sodium   = extractValue(lowerText, "sodium[^\\d]*(\\d+)");
+        String[] lines = text.split("\n");
 
-        // TODO: pass these values to your confirmation fragment via Bundle or ViewModel
+        double calories = 0, protein = 0, carbs = 0, fat = 0, sugar = 0;
+
+        for (String line : lines) {
+
+            // remove extra spaces
+            line = line.trim();
+
+            // skip empty lines
+            if (line.isEmpty()) continue;
+
+            if (contains(line, "calories", "السعرات")) {
+                calories = extractFirstNumber(line);
+            }
+
+            else if (contains(line, "protein", "proteins", "بروتين")) {
+                protein = extractFirstNumber(line);
+            }
+
+            else if (contains(line, "carbohydrate", "glucides", "كربوهيدرات")) {
+                carbs = extractFirstNumber(line);
+            }
+
+            else if (contains(line, "fat", "lipides", "دهون")) {
+                // avoid "saturated fat"
+                if (!line.contains("saturated")) {
+                    fat = extractFirstNumber(line);
+                }
+            }
+
+            else if (contains(line, "sugar", "sucre", "سكر")) {
+                sugar = extractFirstNumber(line);
+            }
+        }
+
+        //pass these values to your confirmation fragment via Bundle or ViewModel
         Bundle bundle = new Bundle();
         bundle.putString("Action","Confirm");
-        bundle.putInt("calories", calories);
-        bundle.putInt("protein",  protein);
-        bundle.putInt("carbs",    carbs);
-        bundle.putInt("fat",      fat);
-        bundle.putInt("sugar",    sugar);
-        bundle.putInt("sodium",   sodium);
+        bundle.putDouble("calories", calories);
+        bundle.putDouble("protein",  protein);
+        bundle.putDouble("carbs",    carbs);
+        bundle.putDouble("fat",      fat);
+        bundle.putDouble("sugar",    sugar);
+
 
         NavHostFragment.findNavController(this)
                 .navigate(R.id.action_scanFragment_to_addMealFragment, bundle);
@@ -253,6 +282,22 @@ public class ScanFragment extends Fragment {
         Matcher m = Pattern.compile(pattern, Pattern.CASE_INSENSITIVE).matcher(text);
         if (m.find()) {
             try { return Integer.parseInt(m.group(1)); } catch (Exception ignored) {}
+        }
+        return 0;
+    }
+    private boolean contains(String line, String... keywords) {
+        for (String k : keywords) {
+            if (line.contains(k)) return true;
+        }
+        return false;
+    }
+
+    private double extractFirstNumber(String line) {
+        Matcher m = Pattern.compile("(\\d+\\.?\\d*)").matcher(line);
+        if (m.find()) {
+            try {
+                return Double.parseDouble(m.group(1));
+            } catch (Exception ignored) {}
         }
         return 0;
     }

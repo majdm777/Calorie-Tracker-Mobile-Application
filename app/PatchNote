@@ -88,7 +88,8 @@ V0.0.12.3:
 
 V0.0.12.4:
           _ implemented the scan fragment that can scan an product and tells you its nutrition or to choose a image from gallery
-
+V0.0.12.5:
+          _Improved scannutritionlabel function
 
 
 
