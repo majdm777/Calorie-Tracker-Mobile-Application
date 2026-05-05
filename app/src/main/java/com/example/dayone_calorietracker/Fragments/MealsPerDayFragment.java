@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.dayone_calorietracker.Adapters.MealsPerDayAdapter;
 import com.example.dayone_calorietracker.DataBase.AppDataBase;
 import com.example.dayone_calorietracker.DataBase.Enitities.MealsPerDay;
+import com.example.dayone_calorietracker.Models.DaysViewModel;
 import com.example.dayone_calorietracker.Models.MealsPerDayViewModel;
 import com.example.dayone_calorietracker.R;
 
@@ -28,7 +30,12 @@ public class MealsPerDayFragment extends Fragment {
     RecyclerView recyclerView;
     MealsPerDayAdapter adapter;
     MealsPerDayViewModel viewModel;
+    DaysViewModel daysViewModel;
+
+    TextView protein, sugar, carbs, fats;
+
     List<MealsPerDay> MPD = new ArrayList<>();
+
 
     Bundle bundle;
 
@@ -41,6 +48,12 @@ public class MealsPerDayFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.meals_per_day_layout, container, false);
         AppDataBase db = AppDataBase.getInstance(requireContext());
+
+        protein=view.findViewById(R.id.Protein);
+        sugar=view.findViewById(R.id.Sugar);
+        carbs=view.findViewById(R.id.Carbs);
+        fats=view.findViewById(R.id.Fats);
+
         int dayId= getArguments().getInt("ID");
         Log.d("DB", "Fragment received dayId = " + dayId);
         recyclerView=view.findViewById(R.id.recMealsPerDay);
@@ -48,6 +61,15 @@ public class MealsPerDayFragment extends Fragment {
         adapter = new MealsPerDayAdapter(new ArrayList<>());
         recyclerView.setAdapter(adapter);
 
+        daysViewModel= new ViewModelProvider(this).get(DaysViewModel.class);
+        daysViewModel.getDay(dayId).observe(getViewLifecycleOwner(), day -> {
+            if (day != null) {
+                protein.setText("Protein: " + day.Protein + " g");
+                sugar.setText("Sugar: " + day.Sugar + " g");
+                carbs.setText("Carbs: " + day.Carbs + " g");
+                fats.setText("Fats: " + day.Fats + " g");
+            }
+                });
         viewModel = new ViewModelProvider(this).get(MealsPerDayViewModel.class);
         viewModel.getMealsForDay(dayId)
             .observe(getViewLifecycleOwner(), meals -> {

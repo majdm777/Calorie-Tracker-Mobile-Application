@@ -56,6 +56,11 @@ public class DaysViewModel extends AndroidViewModel {
             db.daydao().updateDay(dayDate, calorie, protein, carbs, sugar, fats,state);
         });
     }
+    public LiveData<Day> getDay(int dayId) {
+        return db.daydao().getDayInfoById(dayId);
+    }
+
+
 
     public void addMealToDay(Meal meal, double amount) {
         executor.execute(() -> {

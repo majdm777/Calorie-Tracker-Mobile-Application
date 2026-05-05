@@ -75,10 +75,11 @@ V0.0.11.2:
            _ the progressBar change its color according to the progress.
            _ the app almost ready
 
+V0.0.12.1:
+           _ added today's nutrition to the mealsperday fragment
+
 
 
 F.F:
     _ color template for the app
-    _ Days new feature , show macros then display the meals per day
     _ add some more features at stats page
-    _
