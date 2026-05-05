@@ -16,7 +16,11 @@
 
     <fragment
         android:id="@+id/statsFragment"
-        android:name="com.example.dayone_calorietracker.Fragments.StatsFragment" />
+        android:name="com.example.dayone_calorietracker.Fragments.StatsFragment" >
+        <action
+            android:id="@+id/action_statsFragment_to_mealsPerDayFragment"
+            app:destination="@id/mealsPerDayFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/mealsFragment"

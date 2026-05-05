@@ -14,11 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.dayone_calorietracker.Adapters.DaysAdapter;
 import com.example.dayone_calorietracker.DataBase.Enitities.Day;
+import com.example.dayone_calorietracker.DataBase.Enitities.Meal;
 import com.example.dayone_calorietracker.Models.DaysViewModel;
 import com.example.dayone_calorietracker.R;
 import com.github.mikephil.charting.charts.BarChart;
@@ -72,6 +74,16 @@ public class StatsFragment extends Fragment {
             getCurrentWeek(days);
             adapter.setDays(days);
         });
+
+        adapter.setOnItemClickListener(Day -> {
+
+            Bundle bundle = new Bundle();
+            bundle.putInt("ID", Day.Id);
+
+            NavHostFragment.findNavController(this)
+                    .navigate(R.id.action_statsFragment_to_mealsPerDayFragment, bundle);
+        });
+
         btnLastWeek = view.findViewById(R.id.LastWeek);
         btnLastWeek.setOnClickListener(v->{displayWeek();});
 
@@ -215,8 +227,7 @@ public class StatsFragment extends Fragment {
                 int index = (int) e.getX(); // position of bar
 
                 Day clickedDay = days.get(index); // 🔥 match your list
-
-                Toast.makeText(requireContext(), ""+clickedDay.calorie, Toast.LENGTH_SHORT).show();
+                filterDays(clickedDay.Id);
 
 
                 // 👉 open MealsPerDayFragment (optional)
@@ -225,10 +236,23 @@ public class StatsFragment extends Fragment {
 
             @Override
             public void onNothingSelected() {
+                adapter.setDays(GDays);
             }
         });
         // 5. Refresh
         barChart.notifyDataSetChanged();
         barChart.invalidate();
+    }
+
+    private void filterDays(int dayId) {
+        List<Day> filtered = new ArrayList<>();
+
+        for (Day day : GDays) {
+            if (day.Id == dayId ) {
+                filtered.add(day);
+            }
+        }
+
+        adapter.setDays(filtered);
     }
 }
