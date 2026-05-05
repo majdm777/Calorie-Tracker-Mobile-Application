@@ -101,6 +101,7 @@ public class AddMealFragment extends Fragment {
 
         btnSave.setOnClickListener(v -> saveMeal());
         btnSaveAddMeal.setOnClickListener(v -> SaveAddMeal());
+        btnAdd_Meal.setOnClickListener(v -> AddMeal());
         btnSaveChanges.setOnClickListener(v -> updateMeal());
 
         adjustTextView();
@@ -149,9 +150,24 @@ public class AddMealFragment extends Fragment {
         new Thread(() -> {
             AppDataBase db = AppDataBase.getInstance(requireContext());
             db.mealdao().insert(meal);
-            daysViewModel.updateDay(dateString, (int) meal.Calorie, meal.Protein, meal.Carbs, meal.Sugar, meal.Fats);
+            daysViewModel.addMealToDay(meal, 1);
             requireActivity().runOnUiThread(() -> {
                 Toast.makeText(getContext(), "Saved & Added to Day", Toast.LENGTH_SHORT).show();
+                NavHostFragment.findNavController(this).popBackStack();
+            });
+        }).start();
+    }
+
+    private void AddMeal(){
+        if (!validateInputs()) return;
+
+        String dateString = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        Meal meal = createMealFromInputs();
+
+        new Thread(() -> {
+            daysViewModel.addMealToDay(meal, 1);
+            requireActivity().runOnUiThread(() -> {
+                Toast.makeText(getContext(), " Added to Day", Toast.LENGTH_SHORT).show();
                 NavHostFragment.findNavController(this).popBackStack();
             });
         }).start();

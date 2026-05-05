@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -47,7 +48,7 @@ public class StatsFragment extends Fragment {
     RecyclerView recyclerView;
     DaysAdapter adapter;
     DaysViewModel viewModel;
-
+    Button btnLastWeek,btnLastMonth;
     List<Day> GDays;
 
 
@@ -59,7 +60,7 @@ public class StatsFragment extends Fragment {
 
         barChart = view.findViewById(R.id.barChart);
 
-        recyclerView = view.findViewById(R.id.recStats);
+        recyclerView = view.findViewById(R.id.recDay);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         adapter = new DaysAdapter(new ArrayList<>());
@@ -71,34 +72,81 @@ public class StatsFragment extends Fragment {
             getCurrentWeek(days);
             adapter.setDays(days);
         });
+        btnLastWeek = view.findViewById(R.id.LastWeek);
+        btnLastWeek.setOnClickListener(v->{displayWeek();});
+
+        btnLastMonth =view.findViewById(R.id.LastMonth);
+        btnLastMonth.setOnClickListener(v->{displayMonth();});
 
 
         return view;
     }
 
     private void getCurrentWeek(List<Day> allDays) {
-
         List<Day> week = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
         Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek()); // start of week
+        cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
         Date startOfWeek = cal.getTime();
+
+        Calendar endCal = (Calendar) cal.clone();
+        endCal.add(Calendar.DAY_OF_WEEK, 6);
+        Date endOfWeek = endCal.getTime();
 
         for (Day d : allDays) {
             try {
-                Date date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(d.Date);
-
-                if (date.after(startOfWeek) || date.equals(startOfWeek)) {
+                Date date = sdf.parse(d.Date);
+                if (!date.before(startOfWeek) && !date.after(endOfWeek)) {
                     week.add(d);
                 }
-
             } catch (Exception ignored) {}
         }
 
         setupChart(week);
     }
+    private void getCurrentMonth(List<Day> allDays) {
+        List<Day> month = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_MONTH, 1); // first day of month
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Date startOfMonth = cal.getTime();
+
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH)); // last day of month
+        Date endOfMonth = cal.getTime();
+
+        for (Day d : allDays) {
+            try {
+                Date date = sdf.parse(d.Date);
+                if (!date.before(startOfMonth) && !date.after(endOfMonth)) {
+                    month.add(d);
+                }
+            } catch (Exception ignored) {}
+        }
+
+        setupChart(month);
+    }
+
+    public void displayMonth(){
+        getCurrentMonth(GDays);
+    }
+    public void displayWeek(){
+        getCurrentWeek(GDays);
+    }
+
 
     private void setupChart(List<Day> days) {
+        barChart.clear(); // restart everything
+
         if (days == null || days.isEmpty()) {
             barChart.clear(); // Clear chart if no data
             return;

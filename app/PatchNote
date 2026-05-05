@@ -77,6 +77,12 @@ V0.0.11.2:
 
 V0.0.12.1:
            _ added today's nutrition to the mealsperday fragment
+V0.0.12.2:
+           _ implemented the About Fragment
+           _ implemented the Settings Fragment
+           _ fixed the save and add meal button
+           _ added the add without saving button
+
 
 
 
