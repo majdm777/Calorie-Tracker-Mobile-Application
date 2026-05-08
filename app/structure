@@ -4,6 +4,7 @@ MainActivity
  │     │         ├── AddMealFragment
  │     │         └── MealsPerDayFragment
  │     └── StatsFragment
+ │               └── MealsPerDayFragment
  │
  ├── Drawer:
  │     ├── MealsFragment
@@ -11,9 +12,11 @@ MainActivity
  │     │         └── ChooseWeightFragment
  │     ├── DaysFragment
  │     │         └── MealsPerDay
+ │     ├── ScanFragment/Calories
+ │     │         └── AddMealFragment
  │     ├── AboutFragment
  │     └── SettingsFragment
-
+ │
  └── Inside fragments:
        Meals → AddMeal / ChooseWeight
        Days → MealsPerDay

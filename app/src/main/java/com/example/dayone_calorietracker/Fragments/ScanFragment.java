@@ -238,7 +238,7 @@ public class ScanFragment extends Fragment {
                 protein = extractFirstNumber(line);
             }
 
-            else if (contains(line, "carbohydrate", "glucides", "كربوهيدرات")) {
+            else if (contains(line, "carbohydrate","carbs", "glucides", "كربوهيدرات")) {
                 carbs = extractFirstNumber(line);
             }
 

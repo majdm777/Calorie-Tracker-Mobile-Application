@@ -37,9 +37,11 @@ public class SettingFragment extends Fragment {
         .setMessage("This will delete everything. Continue?")
         .setPositiveButton("Yes", (d, w) -> {
             AppDataBase db = AppDataBase.getInstance(requireContext());
-            db.daydao().deleteAll();
-            db.mealsperdaydao().deleteAll();
-            db.mealdao().deleteAll();
+            new Thread(()->{
+                db.mealdao().deleteAll();
+                db.mealsperdaydao().deleteAll();
+                db.daydao().deleteAll();
+            }).start();
         })
         .setNegativeButton("Cancel", null)
         .show();
